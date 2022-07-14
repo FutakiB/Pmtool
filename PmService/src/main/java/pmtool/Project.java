@@ -21,11 +21,11 @@ public class Project {
         this.backOfficeName = backOfficeName;
     }
 
-    public void AddMilestone(Task milestone){
+    public void addMilestone(Task milestone){
         milestones.add(milestone);
     }
 
-    public void RemoveMilestone(Task milestone){
+    public void removeMilestone(Task milestone){
         milestones.remove(milestone);
     }
 

@@ -1,7 +1,6 @@
 package pmtool;
 
 import java.time.LocalDateTime;
-import java.time.Period;
 import java.util.List;
 
 public class Milestone {
@@ -9,7 +8,6 @@ public class Milestone {
     private String name;
     private LocalDateTime dueDate;
     private int requiredDays;
-
     private List<Task> tasks;
     private List<Task> deliverys;
 
@@ -20,19 +18,19 @@ public class Milestone {
         this.requiredDays = requiredDays;
     }
 
-    public void AddSubtask(Task task){
+    public void addSubtask(Task task){
         tasks.add(task);
     }
 
-    public void RemoveSubtask(Task task){
+    public void removeSubtask(Task task){
         tasks.remove(task);
     }
 
-    public void AddDelivery(Task delivery){
+    public void addDelivery(Task delivery){
         deliverys.add(delivery);
     }
 
-    public void RemoveDelivery(Task delivery){
+    public void removeDelivery(Task delivery){
         deliverys.remove(delivery);
     }
 

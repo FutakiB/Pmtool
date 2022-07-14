@@ -1,6 +1,5 @@
 package pmtool;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 public class Task {
@@ -14,11 +13,11 @@ public class Task {
         this.requiredDays = requiredDays;
     }
 
-    public void AddSubtask(Task subtask){
+    public void addSubtask(Task subtask){
         subtasks.add(subtask);
     }
 
-    public void RemoveSubtask(Task subtask){
+    public void removeSubtask(Task subtask){
         subtasks.remove(subtask);
     }
 

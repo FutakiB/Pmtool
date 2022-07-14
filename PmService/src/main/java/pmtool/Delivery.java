@@ -1,8 +1,5 @@
 package pmtool;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
 //Leszállítandó
 public class Delivery {
     private int id;
