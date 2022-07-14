@@ -1,6 +1,6 @@
 package pmtool;
 
-public class User {
+public class User{
     public enum role {
         Dev,
         Manager,
