@@ -1,21 +1,23 @@
 package pmtool;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.Period;
 import java.util.List;
 
 public class Milestone {
     private int id;
     private String name;
     private LocalDateTime dueDate;
-    private int requiredDays;
+    private Duration requiredTime;
     private List<Task> tasks;
-    private List<Task> deliverys;
+    private List<Delivery> deliveries;
 
-    public Milestone(int id, String name, LocalDateTime dueDate, int requiredDays) {
+    public Milestone(int id, String name, LocalDateTime dueDate, Duration requiredTime) {
         this.id = id;
         this.name = name;
         this.dueDate = dueDate;
-        this.requiredDays = requiredDays;
+        this.requiredTime = requiredTime;
     }
 
     public void addSubtask(Task task){
@@ -26,12 +28,12 @@ public class Milestone {
         tasks.remove(task);
     }
 
-    public void addDelivery(Task delivery){
-        deliverys.add(delivery);
+    public void addDelivery(Delivery delivery){
+        deliveries.add(delivery);
     }
 
-    public void removeDelivery(Task delivery){
-        deliverys.remove(delivery);
+    public void removeDelivery(Delivery delivery){
+        deliveries.remove(delivery);
     }
 
     public int getId() {
@@ -58,11 +60,11 @@ public class Milestone {
         this.dueDate = dueDate;
     }
 
-    public int getRequiredDays() {
-        return requiredDays;
+    public Duration getRequiredTime() {
+        return requiredTime;
     }
 
-    public void setRequiredDays(int requiredDays) {
-        this.requiredDays = requiredDays;
+    public void setRequiredTime(Duration requiredTime) {
+        this.requiredTime = requiredTime;
     }
 }

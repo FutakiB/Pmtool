@@ -1,16 +1,26 @@
 package pmtool;
 
+import java.time.Duration;
 import java.util.List;
 
 public class Task {
     private int id;
     private String name;
-    private int requiredDays;
+    private Duration requiredTime;
     private List<Task> subtasks;
+    private List<User> assignedUsers;
 
-    public Task(int id, int requiredDays) {
+    public Task(int id, String name, Duration requiredTime) {
         this.id = id;
-        this.requiredDays = requiredDays;
+        this.name=name;
+        this.requiredTime = requiredTime;
+    }
+    public List<User> getAssignedUsers() {
+        return assignedUsers;
+    }
+
+    public void setAssignedUsers(List<User> assignedUsers) {
+        this.assignedUsers = assignedUsers;
     }
 
     public void addSubtask(Task subtask){
@@ -19,6 +29,14 @@ public class Task {
 
     public void removeSubtask(Task subtask){
         subtasks.remove(subtask);
+    }
+
+    public void addAssignedUser(User assignedUser){
+        assignedUsers.add(assignedUser);
+    }
+
+    public void removeAssignedUser(User assignedUser){
+        assignedUsers.remove(assignedUser);
     }
 
     public List<Task> getSubtasks() {
@@ -45,11 +63,11 @@ public class Task {
         this.name = name;
     }
 
-    public int getRequiredDays() {
-        return requiredDays;
+    public Duration getRequiredTime() {
+        return requiredTime;
     }
 
-    public void setRequiredDays(int requiredDays) {
-        this.requiredDays = requiredDays;
+    public void setRequiredTime(Duration requiredTime) {
+        this.requiredTime = requiredTime;
     }
 }
