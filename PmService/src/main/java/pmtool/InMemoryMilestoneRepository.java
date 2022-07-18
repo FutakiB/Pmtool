@@ -12,10 +12,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
-public class MilestoneRepository implements JpaRepository<Milestone, Integer> {
+public class InMemoryMilestoneRepository implements JpaRepository<Milestone, Integer> {
     private List<Milestone> db;
 
-    public MilestoneRepository() {
+    public InMemoryMilestoneRepository() {
         new ArrayList<Milestone>();
     }
 
