@@ -39,7 +39,7 @@ public class InMemoryProjectRepositoryImpl implements JpaRepository<Project, Int
 
     @Override
     public List<Project> findAllById(Iterable<Integer> integers) {
-        List<Project> p = new ArrayList<Project>();
+        List<Project> p = new ArrayList<>();
         for (Integer i : integers) {
             p.add(projects.stream().filter(p1 -> p1.getId() == i).findFirst().get());
         }
