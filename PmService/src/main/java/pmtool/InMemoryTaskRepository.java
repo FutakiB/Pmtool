@@ -12,10 +12,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
-public class TaskRepository implements JpaRepository<Task, Integer>{
+public class InMemoryTaskRepository implements JpaRepository<Task, Integer>{
     private List<Task> db;
 
-    public TaskRepository() {
+    public InMemoryTaskRepository() {
         new ArrayList<Task>();
     }
 
