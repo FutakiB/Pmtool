@@ -13,7 +13,6 @@ import java.util.Optional;
 import java.util.function.Function;
 
 public class MilestoneRepository implements JpaRepository<Milestone, Integer> {
-
     private List<Milestone> db;
 
     public MilestoneRepository() {
