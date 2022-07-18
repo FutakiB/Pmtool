@@ -143,6 +143,11 @@ public class InMemoryProjectRepositoryImpl implements JpaRepository<Project, Int
     }
 
     @Override
+    public Project getReferenceById(Integer integer) {
+        return null;
+    }
+
+    @Override
     public <S extends Project> Optional<S> findOne(Example<S> example) {
         return Optional.empty();
     }
