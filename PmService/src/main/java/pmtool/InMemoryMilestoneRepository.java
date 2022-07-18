@@ -14,8 +14,9 @@ import java.util.function.Function;
 
 public class InMemoryMilestoneRepository implements JpaRepository<Milestone, Integer> {
     private List<Milestone> db;
+
     public InMemoryMilestoneRepository() {
-        db = new ArrayList<Milestone>();
+        new ArrayList<Milestone>();
     }
 
     @Override
@@ -45,7 +46,9 @@ public class InMemoryMilestoneRepository implements JpaRepository<Milestone, Int
     }
 
     @Override
-    public long count() { return db.size(); }
+    public long count() {
+        return 0;
+    }
 
     @Override
     public void deleteById(Integer id) {
@@ -59,7 +62,9 @@ public class InMemoryMilestoneRepository implements JpaRepository<Milestone, Int
 
     @Override
     public void deleteAllById(Iterable<? extends Integer> ids) {
-        ids.forEach(i -> db.removeIf(m -> m.getId() == i));
+        for (Integer id : ids) {
+            db.remove(id);
+        }
     }
 
     @Override
@@ -71,20 +76,12 @@ public class InMemoryMilestoneRepository implements JpaRepository<Milestone, Int
 
     @Override
     public void deleteAll() {
-        db.size();
-        if(db!=null) db.clear();
-        db.size();
+        db.clear();
     }
 
     @Override
     public <S extends Milestone> S save(S entity) {
-        Optional milestone=findById(entity.getId());
-        if (milestone.isPresent()){
-            db.set(db.indexOf(milestone.get()),entity);
-        }else{
-            entity.setId(db.size());
-            db.add(entity);
-        }
+        db.add(entity);
         return entity;
     }
 
@@ -92,8 +89,9 @@ public class InMemoryMilestoneRepository implements JpaRepository<Milestone, Int
     public <S extends Milestone> List<S> saveAll(Iterable<S> entities) {
         List<S> result = new ArrayList<>();
         for (S entity : entities) {
-            result.add(save(entity));
+            db.add(entity);
         }
+
         return result;
     }
 
@@ -139,12 +137,12 @@ public class InMemoryMilestoneRepository implements JpaRepository<Milestone, Int
 
     @Override
     public Milestone getOne(Integer id) {
-        return findById(id).orElse(null);
+        return getById(id);
     }
 
     @Override
     public Milestone getById(Integer id) {
-        return findById(id).orElse(null);
+        return null;
     }
 
     @Override
