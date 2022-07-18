@@ -81,6 +81,7 @@ public class InMemoryMilestoneRepository implements JpaRepository<Milestone, Int
 
     @Override
     public <S extends Milestone> S save(S entity) {
+        entity.setId(db.size());
         db.add(entity);
         return entity;
     }
@@ -89,6 +90,7 @@ public class InMemoryMilestoneRepository implements JpaRepository<Milestone, Int
     public <S extends Milestone> List<S> saveAll(Iterable<S> entities) {
         List<S> result = new ArrayList<>();
         for (S entity : entities) {
+            entity.setId(db.size());
             db.add(entity);
         }
 
