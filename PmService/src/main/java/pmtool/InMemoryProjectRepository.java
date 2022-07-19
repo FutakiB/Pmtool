@@ -44,7 +44,7 @@ public class InMemoryProjectRepository implements JpaRepository<Project, Integer
     public List<Project> findAllById(Iterable<Integer> integers) {
         List<Project> p = new ArrayList<>();
         for (Integer i : integers) {
-            p.add(projects.stream().filter(p1 -> p1.getId() == i).findFirst().get());
+            findById(i).ifPresent(p::add);
         }
         return p;
     }
@@ -71,7 +71,7 @@ public class InMemoryProjectRepository implements JpaRepository<Project, Integer
 
     @Override
     public void deleteAll(Iterable<? extends Project> entities) {
-        entities.forEach(p -> projects.remove(p));
+        entities.forEach(projects::remove);
     }
 
     @Override
@@ -89,8 +89,7 @@ public class InMemoryProjectRepository implements JpaRepository<Project, Integer
     @Override
     public <S extends Project> List<S> saveAll(Iterable<S> entities) {
         entities.forEach(e -> {
-            e.setId(++id);
-            projects.add(e);
+            save(e);
         });
         return (List<S>) projects;
     }
@@ -142,7 +141,7 @@ public class InMemoryProjectRepository implements JpaRepository<Project, Integer
 
     @Override
     public Project getById(Integer integer) {
-        return projects.stream().filter(p -> p.getId() == integer).findFirst().get();
+        return findById(integer).orElse(null);
     }
 
     @Override
