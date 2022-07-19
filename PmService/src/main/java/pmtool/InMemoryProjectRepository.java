@@ -21,6 +21,9 @@ public class InMemoryProjectRepository implements JpaRepository<Project, Integer
         projects = new ArrayList<>();
     }
 
+    List<Project> getProjects() {
+        return projects;
+    }
 
     @Override
     public List<Project> findAll() {
