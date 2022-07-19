@@ -2,7 +2,7 @@ package pmtool;
 
 //Leszállítandó
 public class Delivery {
-    private int id;
+    private Integer id;
     private String name;
     private DeliveryType type;
 
