@@ -20,5 +20,17 @@ public class PmService {
         return projectRepository.findAll();
     }
 
+    public void addMilestone(Project project) {
+
+    }
+
+    public void addDelivery(Milestone milestone) {
+
+    }
+
+    public void addTask(Milestone milestone) {
+
+    }
+
 
 }
