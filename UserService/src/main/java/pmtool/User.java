@@ -7,6 +7,18 @@ public class User{
         Analyst
     }
     private String name;
-    private int id;
+    private Integer id;
     private role role;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public User.role getRole() {
+        return role;
+    }
+
+    public String getName() {
+        return name;
+    }
 }
