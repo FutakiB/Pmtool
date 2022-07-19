@@ -2,8 +2,7 @@ package pmtool;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
-public class Project {
+public class Project{
     private int id;
     private String name;
     private ProjectStatus status;
