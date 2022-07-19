@@ -149,6 +149,11 @@ public class InMemoryDeliveryRepository implements JpaRepository<Delivery, Integ
         return null;
     }
 
+//    @Override
+//    public Delivery getReferenceById(Integer integer) {
+//        return null;
+//    }
+
     @Override
     public <S extends Delivery> Optional<S> findOne(Example<S> example) {
         return Optional.empty();

@@ -4,6 +4,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.List;
+import java.util.Objects;
 
 public class Milestone {
     private int id;
@@ -66,5 +67,18 @@ public class Milestone {
 
     public void setRequiredTime(Duration requiredTime) {
         this.requiredTime = requiredTime;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Milestone milestone = (Milestone) o;
+        return id == milestone.id && Objects.equals(name, milestone.name) && Objects.equals(dueDate, milestone.dueDate) && Objects.equals(requiredTime, milestone.requiredTime) && Objects.equals(tasks, milestone.tasks) && Objects.equals(deliveries, milestone.deliveries);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, dueDate, requiredTime, tasks, deliveries);
     }
 }

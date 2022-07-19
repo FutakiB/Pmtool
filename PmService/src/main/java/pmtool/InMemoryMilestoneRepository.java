@@ -14,9 +14,8 @@ import java.util.function.Function;
 
 public class InMemoryMilestoneRepository implements JpaRepository<Milestone, Integer> {
     private List<Milestone> db;
-
     public InMemoryMilestoneRepository() {
-        new ArrayList<Milestone>();
+        db = new ArrayList<Milestone>();
     }
 
     @Override
@@ -46,9 +45,7 @@ public class InMemoryMilestoneRepository implements JpaRepository<Milestone, Int
     }
 
     @Override
-    public long count() {
-        return 0;
-    }
+    public long count() { return db.size(); }
 
     @Override
     public void deleteById(Integer id) {
@@ -62,9 +59,7 @@ public class InMemoryMilestoneRepository implements JpaRepository<Milestone, Int
 
     @Override
     public void deleteAllById(Iterable<? extends Integer> ids) {
-        for (Integer id : ids) {
-            db.remove(id);
-        }
+        ids.forEach(i -> db.removeIf(m -> m.getId() == i));
     }
 
     @Override
@@ -76,13 +71,20 @@ public class InMemoryMilestoneRepository implements JpaRepository<Milestone, Int
 
     @Override
     public void deleteAll() {
-        db.clear();
+        db.size();
+        if(db!=null) db.clear();
+        db.size();
     }
 
     @Override
     public <S extends Milestone> S save(S entity) {
-        entity.setId(db.size());
-        db.add(entity);
+        Optional milestone=findById(entity.getId());
+        if (milestone.isPresent()){
+            db.set(db.indexOf(milestone.get()),entity);
+        }else{
+            entity.setId(db.size());
+            db.add(entity);
+        }
         return entity;
     }
 
@@ -90,10 +92,8 @@ public class InMemoryMilestoneRepository implements JpaRepository<Milestone, Int
     public <S extends Milestone> List<S> saveAll(Iterable<S> entities) {
         List<S> result = new ArrayList<>();
         for (S entity : entities) {
-            entity.setId(db.size());
-            db.add(entity);
+            result.add(save(entity));
         }
-
         return result;
     }
 
@@ -139,12 +139,12 @@ public class InMemoryMilestoneRepository implements JpaRepository<Milestone, Int
 
     @Override
     public Milestone getOne(Integer id) {
-        return getById(id);
+        return findById(id).orElse(null);
     }
 
     @Override
     public Milestone getById(Integer id) {
-        return null;
+        return findById(id).orElse(null);
     }
 
     @Override
