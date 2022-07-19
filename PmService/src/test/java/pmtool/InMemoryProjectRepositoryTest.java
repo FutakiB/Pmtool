@@ -1,6 +1,6 @@
 package pmtool;
 
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -12,8 +12,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class InMemoryProjectRepositoryTest {
     static InMemoryProjectRepository projects = new InMemoryProjectRepository();
 
-    @BeforeAll
-    static void setUp() {
+
+    @BeforeEach
+    void setUpEach() {
         projects.getProjects().clear();
         projects.getProjects().add(new Project(1, "Project 1", ProjectStatus.InProgress, LocalDateTime.now(), "Client 1", "BackOffice 1"));
         projects.getProjects().add(new Project(2, "Project 2", ProjectStatus.InProgress, LocalDateTime.now(), "Client 2", "BackOffice 2"));
@@ -22,19 +23,11 @@ class InMemoryProjectRepositoryTest {
 
     @Test
     void findAll() {
-        projects.getProjects().clear();
-        projects.getProjects().add(new Project(1, "Project 1", ProjectStatus.InProgress, LocalDateTime.now(), "Client 1", "BackOffice 1"));
-        projects.getProjects().add(new Project(2, "Project 2", ProjectStatus.InProgress, LocalDateTime.now(), "Client 2", "BackOffice 2"));
-        projects.getProjects().add(new Project(3, "Project 3", ProjectStatus.InProgress, LocalDateTime.now(), "Client 3", "BackOffice 3"));
         assertEquals(3, projects.findAll().size());
     }
 
     @Test
     void findAllById() {
-        projects.getProjects().clear();
-        projects.getProjects().add(new Project(1, "Project 1", ProjectStatus.InProgress, LocalDateTime.now(), "Client 1", "BackOffice 1"));
-        projects.getProjects().add(new Project(2, "Project 2", ProjectStatus.InProgress, LocalDateTime.now(), "Client 2", "BackOffice 2"));
-        projects.getProjects().add(new Project(3, "Project 3", ProjectStatus.InProgress, LocalDateTime.now(), "Client 3", "BackOffice 3"));
         ArrayList<Integer> ids = new ArrayList<>();
         ids.add(1);
         ids.add(2);
@@ -44,19 +37,11 @@ class InMemoryProjectRepositoryTest {
 
     @Test
     void count() {
-        projects.getProjects().clear();
-        projects.getProjects().add(new Project(1, "Project 1", ProjectStatus.InProgress, LocalDateTime.now(), "Client 1", "BackOffice 1"));
-        projects.getProjects().add(new Project(2, "Project 2", ProjectStatus.InProgress, LocalDateTime.now(), "Client 2", "BackOffice 2"));
-        projects.getProjects().add(new Project(3, "Project 3", ProjectStatus.InProgress, LocalDateTime.now(), "Client 3", "BackOffice 3"));
         assertEquals(3, projects.count());
     }
 
     @Test
     void deleteById() {
-        projects.getProjects().clear();
-        projects.getProjects().add(new Project(1, "Project 1", ProjectStatus.InProgress, LocalDateTime.now(), "Client 1", "BackOffice 1"));
-        projects.getProjects().add(new Project(2, "Project 2", ProjectStatus.InProgress, LocalDateTime.now(), "Client 2", "BackOffice 2"));
-        projects.getProjects().add(new Project(3, "Project 3", ProjectStatus.InProgress, LocalDateTime.now(), "Client 3", "BackOffice 3"));
         projects.deleteById(2);
         assertEquals(1, projects.getProjects().get(0).getId());
         assertEquals(3, projects.getProjects().get(1).getId());
@@ -127,11 +112,7 @@ class InMemoryProjectRepositoryTest {
 
     @Test
     void findById() {
-        projects.getProjects().clear();
-        projects.getProjects().add(new Project(1, "Project 1", ProjectStatus.InProgress, LocalDateTime.now(), "Client 1", "BackOffice 1"));
-        projects.getProjects().add(new Project(2, "Project 2", ProjectStatus.InProgress, LocalDateTime.now(), "Client 2", "BackOffice 2"));
-        projects.getProjects().add(new Project(3, "Project 3", ProjectStatus.InProgress, LocalDateTime.now(), "Client 3", "BackOffice 3"));
-        assertEquals(1, projects.findById(1).get().getId());
+        projects.findById(1).ifPresent(p -> assertEquals(1, p.getId()));
     }
 
     @Test
@@ -141,10 +122,6 @@ class InMemoryProjectRepositoryTest {
 
     @Test
     void getById() {
-        projects.getProjects().clear();
-        projects.getProjects().add(new Project(1, "Project 1", ProjectStatus.InProgress, LocalDateTime.now(), "Client 1", "BackOffice 1"));
-        projects.getProjects().add(new Project(2, "Project 2", ProjectStatus.InProgress, LocalDateTime.now(), "Client 2", "BackOffice 2"));
-        projects.getProjects().add(new Project(3, "Project 3", ProjectStatus.InProgress, LocalDateTime.now(), "Client 3", "BackOffice 3"));
         assertEquals(1, projects.getById(1).getId());
     }
 }
