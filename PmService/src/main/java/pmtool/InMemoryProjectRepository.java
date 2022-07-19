@@ -12,15 +12,18 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
-public class InMemoryProjectRepositoryImpl implements JpaRepository<Project, Integer> {
+public class InMemoryProjectRepository implements JpaRepository<Project, Integer> {
 
     private final List<Project> projects;
     private static int id = 0;
 
-    public InMemoryProjectRepositoryImpl() {
+    public InMemoryProjectRepository() {
         projects = new ArrayList<>();
     }
 
+    List<Project> getProjects() {
+        return projects;
+    }
 
     @Override
     public List<Project> findAll() {
