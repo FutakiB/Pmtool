@@ -179,25 +179,19 @@ public class InMemoryTaskRepositoryTest {
     }
 
     @Test
-    void findById() {
+    void findById_returns_entity_with_given_id() {
         assertEquals(0, taskRepository.getById(0).getId());
         assertEquals(testData.get(0), taskRepository.findById(0).orElse(null));
     }
 
     @Test
-    void existsById() {
+    void existsById_returns_true_when_entity_exists() {
         assertTrue(taskRepository.existsById(1));
     }
 
     @Test
-    void getById() {
+    void getById_returns_entity_with_given_id() {
         assertEquals(0, taskRepository.getById(0).getId());
         assertEquals(testData.get(0), taskRepository.getById(0));
-    }
-
-    @Test
-    void flush() {
-        taskRepository.flush();
-        assertEquals(0, taskRepository.count());
     }
 }

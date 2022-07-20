@@ -181,25 +181,19 @@ public class InMemoryMilestoneRepositoryTest {
     }
 
     @Test
-    void findById() {
+    void findById_returns_entity_with_given_id() {
         assertEquals(0, milestones.getById(0).getId());
         assertEquals(testData.get(0), milestones.findById(0).orElse(null));
     }
 
     @Test
-    void existsById() {
+    void existsById_returns_true_when_entity_exists() {
         assertTrue(milestones.existsById(1));
     }
 
     @Test
-    void getById() {
+    void getById_returns_entity_with_given_id() {
         assertEquals(0, milestones.getById(0).getId());
         assertEquals(testData.get(0), milestones.getById(0));
-    }
-
-    @Test
-    void flush() {
-       milestones.flush();
-       assertEquals(0,milestones.count());
     }
 }

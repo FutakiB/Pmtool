@@ -106,9 +106,7 @@ public class InMemoryTaskRepository implements JpaRepository<Task, Integer> {
     }
 
     @Override
-    public void flush() {
-        if(db!=null) db.clear();
-    }
+    public void flush() {}
 
     @Override
     public <S extends Task> S saveAndFlush(S entity) {
