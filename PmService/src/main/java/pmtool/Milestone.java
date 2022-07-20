@@ -21,6 +21,13 @@ public class Milestone {
         this.requiredTime = requiredTime;
     }
 
+    public Milestone(String name, LocalDateTime dueDate, Duration requiredTime) {
+        this.id = id;
+        this.name = name;
+        this.dueDate = dueDate;
+        this.requiredTime = requiredTime;
+    }
+
     public void addSubtask(Task task){
         tasks.add(task);
     }

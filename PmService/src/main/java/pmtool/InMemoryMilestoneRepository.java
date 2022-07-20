@@ -80,7 +80,12 @@ public class InMemoryMilestoneRepository implements JpaRepository<Milestone, Int
         if (milestone.isPresent()){
             db.set(db.indexOf(milestone.get()),entity);
         }else{
-            entity.setId(db.size());
+            if (db.size()==0){
+                entity.setId(1);
+            }
+            else {
+                entity.setId(db.get(db.size()-1).getId()+1);
+            }
             db.add(entity);
         }
         return entity;

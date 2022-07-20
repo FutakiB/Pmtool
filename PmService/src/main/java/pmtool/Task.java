@@ -15,6 +15,12 @@ public class Task {
         this.name=name;
         this.requiredTime = requiredTime;
     }
+
+    public Task(String name, Duration requiredTime) {
+        this.id = id;
+        this.name=name;
+        this.requiredTime = requiredTime;
+    }
     public List<User> getAssignedUsers() {
         return assignedUsers;
     }

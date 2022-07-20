@@ -76,11 +76,16 @@ public class InMemoryTaskRepository implements JpaRepository<Task, Integer> {
 
     @Override
     public <S extends Task> S save(S entity) {
-        Optional Task=findById(entity.getId());
-        if (Task.isPresent()){
-            db.set(db.indexOf(Task.get()),entity);
+        Optional task=findById(entity.getId());
+        if (task.isPresent()){
+            db.set(db.indexOf(task.get()),entity);
         }else{
-            entity.setId(db.size());
+            if (db.size()==0){
+                entity.setId(1);
+            }
+            else {
+                entity.setId(db.get(db.size()-1).getId()+1);
+            }
             db.add(entity);
         }
         return entity;

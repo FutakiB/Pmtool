@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,9 +17,9 @@ public class InMemoryTaskRepositoryTest {
 
     @BeforeAll
     static void beforeAll() {
-        testData.add(new Task(0,"Task 1", Duration.ofMinutes(180)));
-        testData.add(new Task(1,"Task 2", Duration.ofMinutes(60)));
-        testData.add(new Task(2,"Task 3", Duration.ofMinutes(300)));
+        testData.add(new Task(1,"Task 1", Duration.ofMinutes(300)));
+        testData.add(new Task(2,"Task 2", Duration.ofMinutes(180)));
+        testData.add(new Task(3,"Task 3", Duration.ofMinutes(90)));
     }
 
     @BeforeEach
@@ -40,9 +41,9 @@ public class InMemoryTaskRepositoryTest {
     @Test
     void findAllById_returns_all_entities_with_given_ids() {
         ArrayList<Integer> ids = new ArrayList<>();
-        ids.add(0);
         ids.add(1);
         ids.add(2);
+        ids.add(3);
 
         List<Task> result= taskRepository.findAllById(ids);
 
@@ -66,8 +67,8 @@ public class InMemoryTaskRepositoryTest {
 
         assertEquals(testData.size()-1, taskRepository.count());
         assertFalse(taskRepository.findById(1).isPresent());
-        assertEquals(testData.get(0), taskRepository.findById(0).orElse(null));
-        assertEquals(testData.get(2), taskRepository.findById(2).orElse(null));
+        assertEquals(testData.get(1), taskRepository.findById(2).orElse(null));
+        assertEquals(testData.get(2), taskRepository.findById(3).orElse(null));
     }
 
     @Test
@@ -75,23 +76,23 @@ public class InMemoryTaskRepositoryTest {
         taskRepository.delete(testData.get(1));
 
         assertEquals(testData.size()-1, taskRepository.count());
-        assertFalse(taskRepository.findById(1).isPresent());
-        assertEquals(testData.get(0), taskRepository.findById(0).orElse(null));
-        assertEquals(testData.get(2), taskRepository.findById(2).orElse(null));
+        assertFalse(taskRepository.findById(2).isPresent());
+        assertEquals(testData.get(0), taskRepository.findById(1).orElse(null));
+        assertEquals(testData.get(2), taskRepository.findById(3).orElse(null));
     }
 
     @Test
     void deleteAllById_removes_entities_with_given_ids() {
         ArrayList<Integer> ids = new ArrayList<>();
-        ids.add(1);
         ids.add(2);
+        ids.add(3);
 
         taskRepository.deleteAllById(ids);
 
         assertEquals(testData.size()-ids.size(), taskRepository.count());
-        assertFalse(taskRepository.findById(1).isPresent());
         assertFalse(taskRepository.findById(2).isPresent());
-        assertEquals(testData.get(0), taskRepository.findById(0).orElse(null));
+        assertFalse(taskRepository.findById(3).isPresent());
+        assertEquals(testData.get(0), taskRepository.findById(1).orElse(null));
     }
 
     @Test
@@ -103,9 +104,9 @@ public class InMemoryTaskRepositoryTest {
         taskRepository.deleteAll(toDelete);
 
         assertEquals(testData.size()-toDelete.size(), taskRepository.count());
-        assertEquals(testData.get(0), taskRepository.findById(0).orElse(null));
-        assertFalse(taskRepository.findById(1).isPresent());
+        assertEquals(testData.get(0), taskRepository.findById(1).orElse(null));
         assertFalse(taskRepository.findById(2).isPresent());
+        assertFalse(taskRepository.findById(3).isPresent());
     }
 
     @Test
@@ -116,7 +117,7 @@ public class InMemoryTaskRepositoryTest {
 
     @Test
     void save_adds_entity_when_id_is_not_present() {
-        Task toBeSaved=new Task(1234,"New Task",Duration.ofDays(10));
+        Task toBeSaved=new Task(1234,"New Task",Duration.ofHours(6));
 
         long countBefore= taskRepository.count();
         taskRepository.save(toBeSaved);
@@ -128,7 +129,7 @@ public class InMemoryTaskRepositoryTest {
 
     @Test
     void save_updates_entity_when_id_is_present() {
-        Task toBeSaved=new Task(1,"Updated Task",Duration.ofMinutes(31));
+        Task toBeSaved=new Task(2,"Updated Task",Duration.ofMinutes(420));
 
         long countBefore= taskRepository.count();
         taskRepository.save(toBeSaved);
@@ -136,12 +137,13 @@ public class InMemoryTaskRepositoryTest {
 
         assertEquals(countBefore,countAfter);
         assertEquals(toBeSaved, taskRepository.findById(toBeSaved.getId()).orElse(null));
+
     }
 
     @Test
     void save_adds_entities_when_id_is_not_present() {
-        Task m1=new Task(13453,"Updated Task1",Duration.ofMinutes(300));
-        Task m2=new Task(12345,"Updated Task2",Duration.ofMinutes(300));
+        Task m1=new Task(13453,"Updated Task1",Duration.ofMinutes(200));
+        Task m2=new Task(12345,"Updated Task2",Duration.ofMinutes(500));
         Task m3=new Task(13345,"Updated Task3",Duration.ofMinutes(300));
         List<Task> toBeSaved=new ArrayList<>();
         toBeSaved.add(m1);
@@ -160,9 +162,9 @@ public class InMemoryTaskRepositoryTest {
 
     @Test
     void saveAll_updates_entity_when_id_is_present() {
-        Task m1=new Task(0,"Updated Task1",Duration.ofMinutes(300));
-        Task m2=new Task(1,"Updated Task2",Duration.ofMinutes(300));
-        Task m3=new Task(2,"Updated Task3",Duration.ofMinutes(300));
+        Task m1=new Task(1,"Updated Task1",Duration.ofMinutes(360));
+        Task m2=new Task(2,"Updated Task2",Duration.ofMinutes(300));
+        Task m3=new Task(3,"Updated Task3",Duration.ofMinutes(90));
         List<Task> toBeSaved=new ArrayList<>();
         toBeSaved.add(m1);
         toBeSaved.add(m2);
@@ -180,8 +182,8 @@ public class InMemoryTaskRepositoryTest {
 
     @Test
     void findById_returns_entity_with_given_id() {
-        assertEquals(0, taskRepository.getById(0).getId());
-        assertEquals(testData.get(0), taskRepository.findById(0).orElse(null));
+        assertEquals(1, taskRepository.getById(1).getId());
+        assertEquals(testData.get(0), taskRepository.findById(1).orElse(null));
     }
 
     @Test
@@ -191,7 +193,7 @@ public class InMemoryTaskRepositoryTest {
 
     @Test
     void getById_returns_entity_with_given_id() {
-        assertEquals(0, taskRepository.getById(0).getId());
-        assertEquals(testData.get(0), taskRepository.getById(0));
+        assertEquals(1, taskRepository.getById(1).getId());
+        assertEquals(testData.get(0), taskRepository.getById(1));
     }
 }
