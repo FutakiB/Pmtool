@@ -107,7 +107,7 @@ public class InMemoryMilestoneRepository implements JpaRepository<Milestone, Int
 
     @Override
     public void flush() {
-        db.clear();
+        if(db!=null) db.clear();
     }
 
     @Override

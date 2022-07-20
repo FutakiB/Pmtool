@@ -10,7 +10,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static pmtool.InMemoryProjectRepositoryTest.projects;
 
 public class InMemoryMilestoneRepositoryTest {
     static InMemoryMilestoneRepository milestones = new InMemoryMilestoneRepository();

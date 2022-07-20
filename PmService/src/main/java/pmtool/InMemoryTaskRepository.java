@@ -12,11 +12,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
-public class InMemoryTaskRepository implements JpaRepository<Task, Integer>{
+public class InMemoryTaskRepository implements JpaRepository<Task, Integer> {
     private List<Task> db;
-
     public InMemoryTaskRepository() {
-        new ArrayList<Task>();
+        db = new ArrayList<Task>();
     }
 
     @Override
@@ -46,9 +45,7 @@ public class InMemoryTaskRepository implements JpaRepository<Task, Integer>{
     }
 
     @Override
-    public long count() {
-        return 0;
-    }
+    public long count() { return db.size(); }
 
     @Override
     public void deleteById(Integer id) {
@@ -62,9 +59,7 @@ public class InMemoryTaskRepository implements JpaRepository<Task, Integer>{
 
     @Override
     public void deleteAllById(Iterable<? extends Integer> ids) {
-        for (Integer id : ids) {
-            db.remove(id);
-        }
+        ids.forEach(i -> db.removeIf(m -> m.getId() == i));
     }
 
     @Override
@@ -76,12 +71,18 @@ public class InMemoryTaskRepository implements JpaRepository<Task, Integer>{
 
     @Override
     public void deleteAll() {
-        db.clear();
+        if(db!=null) db.clear();
     }
 
     @Override
     public <S extends Task> S save(S entity) {
-        db.add(entity);
+        Optional Task=findById(entity.getId());
+        if (Task.isPresent()){
+            db.set(db.indexOf(Task.get()),entity);
+        }else{
+            entity.setId(db.size());
+            db.add(entity);
+        }
         return entity;
     }
 
@@ -89,9 +90,8 @@ public class InMemoryTaskRepository implements JpaRepository<Task, Integer>{
     public <S extends Task> List<S> saveAll(Iterable<S> entities) {
         List<S> result = new ArrayList<>();
         for (S entity : entities) {
-            db.add(entity);
+            result.add(save(entity));
         }
-
         return result;
     }
 
@@ -107,7 +107,7 @@ public class InMemoryTaskRepository implements JpaRepository<Task, Integer>{
 
     @Override
     public void flush() {
-        db.clear();
+        if(db!=null) db.clear();
     }
 
     @Override
@@ -137,12 +137,12 @@ public class InMemoryTaskRepository implements JpaRepository<Task, Integer>{
 
     @Override
     public Task getOne(Integer id) {
-        return getById(id);
+        return findById(id).orElse(null);
     }
 
     @Override
     public Task getById(Integer id) {
-        return null;
+        return findById(id).orElse(null);
     }
 
     @Override
