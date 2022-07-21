@@ -13,14 +13,14 @@ import java.util.Optional;
 import java.util.function.Function;
 
 public class InMemoryDeliveryRepository implements JpaRepository<Delivery, Integer> {
-    private ArrayList<Delivery> db;
+    public ArrayList<Delivery> deliveries;
     public InMemoryDeliveryRepository(){
-        new ArrayList<Delivery>();
+        this.deliveries = new ArrayList<>();
     }
 
     @Override
     public List<Delivery> findAll() {
-        return db;
+        return deliveries;
     }
 
     @Override
@@ -40,42 +40,43 @@ public class InMemoryDeliveryRepository implements JpaRepository<Delivery, Integ
 
     @Override
     public long count() {
-        return db.size();
+        return deliveries.size();
     }
 
     @Override
     public void deleteById(Integer integer) {
-        db.remove(integer.intValue());
+        deliveries.remove(integer.intValue());
 
     }
 
     @Override
     public void delete(Delivery entity) {
-        db.remove(entity);
+        deliveries.remove(entity);
     }
 
     @Override
     public void deleteAllById(Iterable<? extends Integer> integers) {
         for (Integer i : integers) {
-            db.remove(i.intValue());
+            deliveries.remove(i.intValue());
         }
     }
 
     @Override
     public void deleteAll(Iterable<? extends Delivery> entities) {
         for (Delivery d:entities) {
-            db.remove(d);
+            deliveries.remove(d);
         }
     }
 
     @Override
     public void deleteAll() {
-        db.clear();
+        if (!deliveries.isEmpty())
+            deliveries.clear();
     }
 
     @Override
     public <S extends Delivery> S save(S entity) {
-        db.add(entity);
+        deliveries.add(entity);
         return entity;
     }
 
@@ -84,26 +85,26 @@ public class InMemoryDeliveryRepository implements JpaRepository<Delivery, Integ
         List<S>saved = new ArrayList<>();
         for (S s:entities) {
             saved.add(s);
-            db.add(s);
+            deliveries.add(s);
         }
         return saved;
     }
 
     @Override
     public Optional<Delivery> findById(Integer integer) {
-        return db.stream()
-                .filter(db -> integer.equals(db.getId()))
+        return deliveries.stream()
+                .filter(deliveries -> integer.equals(deliveries.getId()))
                 .findAny();
     }
 
     @Override
     public boolean existsById(Integer integer) {
-        return db.stream().anyMatch(db -> integer.equals(db.getId()));
+        return deliveries.stream().anyMatch(deliveries -> integer.equals(deliveries.getId()));
     }
 
     @Override
     public void flush() {
-        db.clear();
+        deliveries.clear();
     }
 
     @Override
@@ -134,7 +135,7 @@ public class InMemoryDeliveryRepository implements JpaRepository<Delivery, Integ
     @Override
     public Delivery getOne(Integer integer) {
 
-        return (Delivery) db.stream()
+        return (Delivery) deliveries.stream()
                 .filter(db -> integer.equals(db.getId()));
     }
 
