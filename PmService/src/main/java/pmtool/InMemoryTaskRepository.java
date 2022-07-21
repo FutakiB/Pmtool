@@ -13,7 +13,12 @@ import java.util.Optional;
 import java.util.function.Function;
 
 public class InMemoryTaskRepository implements JpaRepository<Task, Integer> {
-    private List<Task> db;
+    private final List<Task> db;
+
+    public List<Task> getDb() {
+        return db;
+    }
+
     public InMemoryTaskRepository() {
         db = new ArrayList<Task>();
     }
