@@ -1,8 +1,8 @@
 package pmtool;
 
 public enum ProjectStatus {
-    InProgress,
-    Completed,
-    Cancelled,
-    OnHold
+    IN_PROGRESS,
+    COMPLETED,
+    CANCELLED,
+    ON_HOLD
 }

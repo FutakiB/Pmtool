@@ -16,9 +16,9 @@ class InMemoryProjectRepositoryTest {
     @BeforeEach
     void setUpEach() {
         projects.getProjects().clear();
-        projects.getProjects().add(new Project(1, "Project 1", ProjectStatus.InProgress, LocalDateTime.now(), "Client 1", "BackOffice 1"));
-        projects.getProjects().add(new Project(2, "Project 2", ProjectStatus.InProgress, LocalDateTime.now(), "Client 2", "BackOffice 2"));
-        projects.getProjects().add(new Project(3, "Project 3", ProjectStatus.InProgress, LocalDateTime.now(), "Client 3", "BackOffice 3"));
+        projects.getProjects().add(new Project(1, "Project 1", ProjectStatus.IN_PROGRESS, LocalDateTime.now(), "Client 1", "BackOffice 1"));
+        projects.getProjects().add(new Project(2, "Project 2", ProjectStatus.IN_PROGRESS, LocalDateTime.now(), "Client 2", "BackOffice 2"));
+        projects.getProjects().add(new Project(3, "Project 3", ProjectStatus.IN_PROGRESS, LocalDateTime.now(), "Client 3", "BackOffice 3"));
     }
 
     @Test
@@ -70,8 +70,8 @@ class InMemoryProjectRepositoryTest {
     @Test
     void testDeleteAll() {
         projects.getProjects().clear();
-        Project p = new Project(1, "Project 1", ProjectStatus.InProgress, LocalDateTime.now(), "Client 1", "BackOffice 1");
-        Project p2 = new Project(2, "Project 2", ProjectStatus.InProgress, LocalDateTime.now(), "Client 2", "BackOffice 2");
+        Project p = new Project(1, "Project 1", ProjectStatus.IN_PROGRESS, LocalDateTime.now(), "Client 1", "BackOffice 1");
+        Project p2 = new Project(2, "Project 2", ProjectStatus.IN_PROGRESS, LocalDateTime.now(), "Client 2", "BackOffice 2");
         ArrayList<Project> ps = new ArrayList<>();
         ps.add(p);
         ps.add(p2);
@@ -90,9 +90,9 @@ class InMemoryProjectRepositoryTest {
     @Test
     void save() {
         projects.getProjects().clear();
-        Project project = new Project(0, "Project 4", ProjectStatus.InProgress, LocalDateTime.now(), "Client 4", "BackOffice 4");
+        Project project = new Project(0, "Project 4", ProjectStatus.IN_PROGRESS, LocalDateTime.now(), "Client 4", "BackOffice 4");
         projects.save(project);
-        project = new Project(0, "Project 5", ProjectStatus.InProgress, LocalDateTime.now(), "Client 5", "BackOffice 5");
+        project = new Project(0, "Project 5", ProjectStatus.IN_PROGRESS, LocalDateTime.now(), "Client 5", "BackOffice 5");
         projects.save(project);
         assertEquals(1, projects.getProjects().get(0).getId());
         assertEquals(2, projects.getProjects().get(1).getId());
@@ -101,8 +101,8 @@ class InMemoryProjectRepositoryTest {
     @Test
     void saveAll() {
         projects.getProjects().clear();
-        Project project = new Project(0, "Project 4", ProjectStatus.InProgress, LocalDateTime.now(), "Client 4", "BackOffice 4");
-        Project project2 = new Project(0, "Project 5", ProjectStatus.InProgress, LocalDateTime.now(), "Client 5", "BackOffice 5");
+        Project project = new Project(0, "Project 4", ProjectStatus.IN_PROGRESS, LocalDateTime.now(), "Client 4", "BackOffice 4");
+        Project project2 = new Project(0, "Project 5", ProjectStatus.IN_PROGRESS, LocalDateTime.now(), "Client 5", "BackOffice 5");
         ArrayList<Project> ps = new ArrayList<>();
         ps.add(project);
         ps.add(project2);

@@ -12,6 +12,11 @@ public class Delivery {
         this.type = type;
     }
 
+    public Delivery() {
+        this.name = "New delivery";
+        this.type = DeliveryType.ARTIFACT;
+    }
+
     public int getId() {
         return id;
     }
@@ -34,5 +39,10 @@ public class Delivery {
 
     public void setType(DeliveryType type) {
         this.type = type;
+    }
+
+    @Override
+    public String toString() {
+        return "Delivery{" + "id=" + id + ", name=" + name + ", type=" + type + '}';
     }
 }

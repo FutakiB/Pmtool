@@ -1,15 +1,17 @@
 package pmtool;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
-public class Project{
+
+public class Project {
     private int id;
     private String name;
     private ProjectStatus status;
     private LocalDateTime startTime;
     private String clientName;
     private String backOfficeName;
-    private List<Task> milestones;
+    private List<Milestone> milestones;
 
     public Project(int id, String name, ProjectStatus status, LocalDateTime startTime, String clientName, String backOfficeName) {
         this.id = id;
@@ -20,11 +22,29 @@ public class Project{
         this.backOfficeName = backOfficeName;
     }
 
-    public void addMilestone(Task milestone){
+    public Project() {
+//        this.id = 0;
+        this.name = "New project";
+        this.status = ProjectStatus.IN_PROGRESS;
+        this.startTime = LocalDateTime.now();
+        this.clientName = "";
+        this.backOfficeName = "";
+        milestones = new ArrayList<>();
+    }
+
+    public List<Milestone> getMilestones() {
+        return milestones;
+    }
+
+    public void setMilestones(List<Milestone> milestones) {
+        this.milestones = milestones;
+    }
+
+    public void addMilestone(Milestone milestone) {
         milestones.add(milestone);
     }
 
-    public void removeMilestone(Task milestone){
+    public void removeMilestone(Milestone milestone) {
         milestones.remove(milestone);
     }
 
@@ -74,5 +94,17 @@ public class Project{
 
     public void setBackOfficeName(String backOfficeName) {
         this.backOfficeName = backOfficeName;
+    }
+
+    @Override
+    public String toString() {
+        return "Project{"
+                + "id=" + id == null ? "null" : id + ", " + System.lineSeparator()
+                + ", name=" + name + System.lineSeparator()
+                + ", status=" + status + System.lineSeparator()
+                + ", startTime=" + startTime + System.lineSeparator()
+                + ", clientName=" + clientName + System.lineSeparator()
+                + ", backOfficeName=" + milestones.toString() + System.lineSeparator()
+                + ", backOfficeName=" + backOfficeName + '}' + System.lineSeparator();
     }
 }

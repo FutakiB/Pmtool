@@ -13,10 +13,9 @@ import java.util.Optional;
 import java.util.function.Function;
 
 public class InMemoryDeliveryRepository implements JpaRepository<Delivery, Integer> {
-    private ArrayList<Delivery> db;
-
-    public InMemoryDeliveryRepository() {
-        new ArrayList<Delivery>();
+    private final ArrayList<Delivery> db;
+    public InMemoryDeliveryRepository(){
+        db = new ArrayList<>();
     }
 
     @Override
@@ -64,7 +63,7 @@ public class InMemoryDeliveryRepository implements JpaRepository<Delivery, Integ
 
     @Override
     public void deleteAll(Iterable<? extends Delivery> entities) {
-        for (Delivery d : entities) {
+        for (Delivery d:entities) {
             db.remove(d);
         }
     }
@@ -82,8 +81,8 @@ public class InMemoryDeliveryRepository implements JpaRepository<Delivery, Integ
 
     @Override
     public <S extends Delivery> List<S> saveAll(Iterable<S> entities) {
-        List<S> saved = new ArrayList<>();
-        for (S s : entities) {
+        List<S>saved = new ArrayList<>();
+        for (S s:entities) {
             saved.add(s);
             db.add(s);
         }

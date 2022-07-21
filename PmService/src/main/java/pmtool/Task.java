@@ -1,6 +1,7 @@
 package pmtool;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Task {
@@ -12,15 +13,22 @@ public class Task {
 
     public Task(int id, String name, Duration requiredTime) {
         this.id = id;
-        this.name=name;
+        this.name = name;
         this.requiredTime = requiredTime;
     }
 
     public Task(String name, Duration requiredTime) {
-        this.id = id;
-        this.name=name;
+        this.name = name;
         this.requiredTime = requiredTime;
     }
+
+    public Task() {
+        this.name = "New task";
+        this.requiredTime = Duration.ZERO;
+        this.subtasks = new ArrayList<>();
+        this.assignedUsers = new ArrayList<>();
+    }
+
     public List<User> getAssignedUsers() {
         return assignedUsers;
     }
@@ -29,7 +37,7 @@ public class Task {
         this.assignedUsers = assignedUsers;
     }
 
-    public void addSubtask(Task subtask){
+    public void addSubtask(Task subtask) {
         subtasks.add(subtask);
     }
 
@@ -75,5 +83,13 @@ public class Task {
 
     public void setRequiredTime(Duration requiredTime) {
         this.requiredTime = requiredTime;
+    }
+
+    @Override
+    public String toString() {
+        return "Task: " + name +
+                " " + requiredTime
+                + " " + subtasks.size() + " subtasks" +
+                " " + assignedUsers.size() + " assigned users";
     }
 }
