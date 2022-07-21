@@ -9,7 +9,7 @@ public class Project{
     private LocalDateTime startTime;
     private String clientName;
     private String backOfficeName;
-    private List<Task> milestones;
+    private List<Milestone> milestones;
 
     public Project(int id, String name, ProjectStatus status, LocalDateTime startTime, String clientName, String backOfficeName) {
         this.id = id;
@@ -20,7 +20,7 @@ public class Project{
         this.backOfficeName = backOfficeName;
     }
 
-    public void addMilestone(Task milestone){
+    public void addMilestone(Milestone milestone) {
         milestones.add(milestone);
     }
 

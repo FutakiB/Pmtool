@@ -11,6 +11,8 @@ public interface ProjectManagement {
 
     void addTask(Milestone milestone, Task task);
 
+    void addTask(Task task, Task SubTask);
+
     void removeProject(Project project);
 
     void removeMilestone(Milestone milestone);
@@ -26,4 +28,12 @@ public interface ProjectManagement {
     List<Delivery> getAllDeliveries();
 
     List<Task> getAllTasks();
+
+    List<Task> getAllSubTasks();
+
+    List<Task> getAllTasksByMilestone(Milestone milestone);
+
+    List<Task> getAllSubTasksByTask(Task task);
+
+
 }

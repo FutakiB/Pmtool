@@ -2,7 +2,6 @@ package pmtool;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.Period;
 import java.util.List;
 import java.util.Objects;
 
@@ -28,7 +27,7 @@ public class Milestone {
         this.requiredTime = requiredTime;
     }
 
-    public void addSubtask(Task task){
+    public void addTask(Task task) {
         tasks.add(task);
     }
 
