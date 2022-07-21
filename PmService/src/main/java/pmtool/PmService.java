@@ -1,5 +1,6 @@
 package pmtool;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PmService implements ProjectManagement {
@@ -74,45 +75,50 @@ public class PmService implements ProjectManagement {
 
     @Override
     public List<Milestone> getAllMilestones() {
-        return null;
+        return milestoneRepository.findAll();
     }
 
     @Override
     public List<Delivery> getAllDeliveries() {
-        return null;
+        return deliveryRepository.findAll();
     }
 
     @Override
     public List<Task> getAllTasks() {
-        return null;
+        return taskRepository.findAll();
     }
 
     @Override
     public List<Task> getAllSubTasks() {
-        return null;
+        return taskRepository.findAll();
+    }
+
+    @Override
+    public List<Milestone> getAllMilestonesByProject(Project project) {
+        return project.getMilestones();
+    }
+
+    @Override
+    public List<Delivery> getAllDeliveriesByMilestone(Milestone milestone) {
+        return milestone.getDeliveries();
     }
 
     @Override
     public List<Task> getAllTasksByMilestone(Milestone milestone) {
-        return null;
+        return milestone.getTasks();
     }
 
     @Override
     public List<Task> getAllSubTasksByTask(Task task) {
-        return null;
+        return task.getSubtasks();
     }
 
-    public void addMilestone(Project project) {
-
+    @Override
+    public List<Task> getAllTasksByProject(Project project) {
+        List<Task> result = new ArrayList<>();
+        for (Milestone milestone : project.getMilestones()) {
+            result.addAll(milestone.getTasks());
+        }
+        return result;
     }
-
-    public void addDelivery(Milestone milestone) {
-
-    }
-
-    public void addTask(Milestone milestone) {
-
-    }
-
-
 }

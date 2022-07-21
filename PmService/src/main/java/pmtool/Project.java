@@ -20,11 +20,19 @@ public class Project{
         this.backOfficeName = backOfficeName;
     }
 
+    public List<Milestone> getMilestones() {
+        return milestones;
+    }
+
+    public void setMilestones(List<Milestone> milestones) {
+        this.milestones = milestones;
+    }
+
     public void addMilestone(Milestone milestone) {
         milestones.add(milestone);
     }
 
-    public void removeMilestone(Task milestone){
+    public void removeMilestone(Task milestone) {
         milestones.remove(milestone);
     }
 

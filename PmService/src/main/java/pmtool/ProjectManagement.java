@@ -31,9 +31,13 @@ public interface ProjectManagement {
 
     List<Task> getAllSubTasks();
 
+    List<Milestone> getAllMilestonesByProject(Project project);
+
+    List<Delivery> getAllDeliveriesByMilestone(Milestone milestone);
+
     List<Task> getAllTasksByMilestone(Milestone milestone);
 
     List<Task> getAllSubTasksByTask(Task task);
 
-
+    List<Task> getAllTasksByProject(Project project);
 }

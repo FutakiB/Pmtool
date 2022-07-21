@@ -20,6 +20,22 @@ public class Milestone {
         this.requiredTime = requiredTime;
     }
 
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
+    }
+
+    public List<Delivery> getDeliveries() {
+        return deliveries;
+    }
+
+    public void setDeliveries(List<Delivery> deliveries) {
+        this.deliveries = deliveries;
+    }
+
     public Milestone(String name, LocalDateTime dueDate, Duration requiredTime) {
         this.id = id;
         this.name = name;
