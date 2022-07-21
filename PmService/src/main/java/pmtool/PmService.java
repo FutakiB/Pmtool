@@ -89,11 +89,6 @@ public class PmService implements ProjectManagement {
     }
 
     @Override
-    public List<Task> getAllSubTasks() {
-        return taskRepository.findAll();
-    }
-
-    @Override
     public List<Milestone> getAllMilestonesByProject(Project project) {
         return project.getMilestones();
     }

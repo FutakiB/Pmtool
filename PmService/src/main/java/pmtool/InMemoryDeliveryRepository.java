@@ -13,8 +13,14 @@ import java.util.Optional;
 import java.util.function.Function;
 
 public class InMemoryDeliveryRepository implements JpaRepository<Delivery, Integer> {
+
     private final ArrayList<Delivery> db;
-    public InMemoryDeliveryRepository(){
+
+    public ArrayList<Delivery> getDb() {
+        return db;
+    }
+
+    public InMemoryDeliveryRepository() {
         db = new ArrayList<>();
     }
 
