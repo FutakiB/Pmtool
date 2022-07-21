@@ -95,4 +95,16 @@ public class Project {
     public void setBackOfficeName(String backOfficeName) {
         this.backOfficeName = backOfficeName;
     }
+
+    @Override
+    public String toString() {
+        return "Project{"
+                + "id=" + id == null ? "null" : id + ", " + System.lineSeparator()
+                + ", name=" + name + System.lineSeparator()
+                + ", status=" + status + System.lineSeparator()
+                + ", startTime=" + startTime + System.lineSeparator()
+                + ", clientName=" + clientName + System.lineSeparator()
+                + ", backOfficeName=" + milestones.toString() + System.lineSeparator()
+                + ", backOfficeName=" + backOfficeName + '}' + System.lineSeparator();
+    }
 }

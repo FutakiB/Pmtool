@@ -2,6 +2,7 @@ package pmtool;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -18,6 +19,14 @@ public class Milestone {
         this.name = name;
         this.dueDate = dueDate;
         this.requiredTime = requiredTime;
+    }
+
+    public Milestone() {
+        this.name = "New milestone";
+        this.dueDate = LocalDateTime.now();
+        this.requiredTime = Duration.ZERO;
+        this.tasks = new ArrayList<>();
+        this.deliveries = new ArrayList<>();
     }
 
     public List<Task> getTasks() {
@@ -37,7 +46,6 @@ public class Milestone {
     }
 
     public Milestone(String name, LocalDateTime dueDate, Duration requiredTime) {
-        this.id = id;
         this.name = name;
         this.dueDate = dueDate;
         this.requiredTime = requiredTime;
@@ -102,5 +110,17 @@ public class Milestone {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, dueDate, requiredTime, tasks, deliveries);
+    }
+
+    @Override
+    public String toString() {
+        return "Milestone{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", dueDate=" + dueDate +
+                ", requiredTime=" + requiredTime +
+                ", tasks=" + tasks +
+                ", deliveries=" + deliveries +
+                '}';
     }
 }

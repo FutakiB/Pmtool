@@ -13,9 +13,9 @@ import java.util.Optional;
 import java.util.function.Function;
 
 public class InMemoryDeliveryRepository implements JpaRepository<Delivery, Integer> {
-    private ArrayList<Delivery> db;
+    private final ArrayList<Delivery> db;
     public InMemoryDeliveryRepository(){
-        new ArrayList<Delivery>();
+        db = new ArrayList<>();
     }
 
     @Override
