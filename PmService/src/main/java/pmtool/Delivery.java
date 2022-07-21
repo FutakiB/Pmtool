@@ -5,11 +5,13 @@ public class Delivery {
     private Integer id;
     private String name;
     private DeliveryType type;
+    private Integer milestoneID;
 
-    public Delivery(int id, String name, DeliveryType type) {
+    public Delivery(Integer id, String name, DeliveryType type, Integer milestoneID) {
         this.id = id;
         this.name = name;
         this.type = type;
+        this.milestoneID = milestoneID;
     }
 
     public Delivery() {
@@ -19,6 +21,13 @@ public class Delivery {
 
     public int getId() {
         return id;
+    }
+    public Integer getMilestoneID() {
+        return milestoneID;
+    }
+
+    public void setMilestoneID(Integer milestoneID) {
+        this.milestoneID = milestoneID;
     }
 
     public void setId(int id) {
