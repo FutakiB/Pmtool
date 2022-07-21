@@ -13,9 +13,9 @@ import java.util.Optional;
 import java.util.function.Function;
 
 public class InMemoryUserRepository implements JpaRepository<User, Integer>{
-    ArrayList<User> users = new ArrayList<>();
+    List<User> users;
     public InMemoryUserRepository(){
-        new ArrayList<User>();
+        users = new ArrayList<>();
     }
     @Override
     public List<User> findAll() {
@@ -34,7 +34,7 @@ public class InMemoryUserRepository implements JpaRepository<User, Integer>{
 
     @Override
     public List<User> findAllById(Iterable<Integer> integers) {
-        List<User> u = new ArrayList<User>();
+        List<User> u = new ArrayList<>();
 
         for (Integer i : integers) {
             findById(i).ifPresent(u::add);
