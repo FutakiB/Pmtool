@@ -81,8 +81,8 @@ public class InMemoryDeliveryRepository implements JpaRepository<Delivery, Integ
     }
 
     @Override
-    public <S extends Delivery> List<S> saveAll(Iterable<S> entities) {
-        List<S>saved = new ArrayList<>();
+    public <S extends Delivery> ArrayList<S> saveAll(Iterable<S> entities) {
+        ArrayList<S>saved = new ArrayList<>();
         for (S s:entities) {
             saved.add(s);
             deliveries.add(s);
@@ -134,9 +134,7 @@ public class InMemoryDeliveryRepository implements JpaRepository<Delivery, Integ
 
     @Override
     public Delivery getOne(Integer integer) {
-
-        return (Delivery) deliveries.stream()
-                .filter(db -> integer.equals(db.getId()));
+        return null;
     }
 
     @Override
