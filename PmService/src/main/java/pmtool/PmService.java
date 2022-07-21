@@ -9,11 +9,14 @@ public class PmService {
     private final InMemoryTaskRepository taskRepository;
 
 
-    public PmService() {
-        projectRepository = new InMemoryProjectRepository();
-        milestoneRepository = new InMemoryMilestoneRepository();
-        deliveryRepository = new InMemoryDeliveryRepository();
-        taskRepository = new InMemoryTaskRepository();
+    public PmService(InMemoryMilestoneRepository milestoneRepository,
+                     InMemoryDeliveryRepository deliveryRepository,
+                     InMemoryTaskRepository taskRepository,
+                     InMemoryProjectRepository projectRepository) {
+        this.milestoneRepository = milestoneRepository;
+        this.deliveryRepository = deliveryRepository;
+        this.taskRepository = taskRepository;
+        this.projectRepository = projectRepository;
     }
 
     public List<Project> getAllProjects() {
