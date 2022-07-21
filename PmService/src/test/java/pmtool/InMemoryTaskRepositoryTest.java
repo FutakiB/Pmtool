@@ -3,13 +3,12 @@ package pmtool;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import java.time.Duration;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class InMemoryTaskRepositoryTest {
     static InMemoryTaskRepository taskRepository = new InMemoryTaskRepository();
@@ -17,9 +16,9 @@ public class InMemoryTaskRepositoryTest {
 
     @BeforeAll
     static void beforeAll() {
-        testData.add(new Task(1,"Task 1", Duration.ofMinutes(300)));
-        testData.add(new Task(2,"Task 2", Duration.ofMinutes(180)));
-        testData.add(new Task(3,"Task 3", Duration.ofMinutes(90)));
+        testData.add(new Task(1, "Task 1", Duration.ofMinutes(300)));
+        testData.add(new Task(2, "Task 2", Duration.ofMinutes(180)));
+        testData.add(new Task(3, "Task 3", Duration.ofMinutes(90)));
     }
 
     @BeforeEach
@@ -30,11 +29,11 @@ public class InMemoryTaskRepositoryTest {
 
     @Test
     void findAll_returns_all_entities() {
-        List<Task> result= taskRepository.findAll();
+        List<Task> result = taskRepository.findAll();
 
-        assertEquals(testData.size(),result.size());
+        assertEquals(testData.size(), result.size());
         for (int i = 0; i < result.size(); i++) {
-            assertEquals(testData.get(i),result.get(i));
+            assertEquals(testData.get(i), result.get(i));
         }
     }
 
@@ -45,27 +44,27 @@ public class InMemoryTaskRepositoryTest {
         ids.add(2);
         ids.add(3);
 
-        List<Task> result= taskRepository.findAllById(ids);
+        List<Task> result = taskRepository.findAllById(ids);
 
-        assertEquals(testData.size(),result.size());
+        assertEquals(testData.size(), result.size());
         for (int i = 0; i < result.size(); i++) {
             assertEquals(ids.get(i), result.get(i).getId());
-            assertEquals(testData.get(i),result.get(i));
+            assertEquals(testData.get(i), result.get(i));
         }
     }
 
     @Test
     void count_returns_correct_value() {
-        long result= taskRepository.count();
+        long result = taskRepository.count();
 
-        assertEquals(testData.size(),result);
+        assertEquals(testData.size(), result);
     }
 
     @Test
     void deleteById_removes_entity_with_given_id() {
         taskRepository.deleteById(1);
 
-        assertEquals(testData.size()-1, taskRepository.count());
+        assertEquals(testData.size() - 1, taskRepository.count());
         assertFalse(taskRepository.findById(1).isPresent());
         assertEquals(testData.get(1), taskRepository.findById(2).orElse(null));
         assertEquals(testData.get(2), taskRepository.findById(3).orElse(null));
@@ -75,7 +74,7 @@ public class InMemoryTaskRepositoryTest {
     void delete_removes_given_entity() {
         taskRepository.delete(testData.get(1));
 
-        assertEquals(testData.size()-1, taskRepository.count());
+        assertEquals(testData.size() - 1, taskRepository.count());
         assertFalse(taskRepository.findById(2).isPresent());
         assertEquals(testData.get(0), taskRepository.findById(1).orElse(null));
         assertEquals(testData.get(2), taskRepository.findById(3).orElse(null));
@@ -89,7 +88,7 @@ public class InMemoryTaskRepositoryTest {
 
         taskRepository.deleteAllById(ids);
 
-        assertEquals(testData.size()-ids.size(), taskRepository.count());
+        assertEquals(testData.size() - ids.size(), taskRepository.count());
         assertFalse(taskRepository.findById(2).isPresent());
         assertFalse(taskRepository.findById(3).isPresent());
         assertEquals(testData.get(0), taskRepository.findById(1).orElse(null));
@@ -103,7 +102,7 @@ public class InMemoryTaskRepositoryTest {
 
         taskRepository.deleteAll(toDelete);
 
-        assertEquals(testData.size()-toDelete.size(), taskRepository.count());
+        assertEquals(testData.size() - toDelete.size(), taskRepository.count());
         assertEquals(testData.get(0), taskRepository.findById(1).orElse(null));
         assertFalse(taskRepository.findById(2).isPresent());
         assertFalse(taskRepository.findById(3).isPresent());
@@ -117,44 +116,44 @@ public class InMemoryTaskRepositoryTest {
 
     @Test
     void save_adds_entity_when_id_is_not_present() {
-        Task toBeSaved=new Task(1234,"New Task",Duration.ofHours(6));
+        Task toBeSaved = new Task(1234, "New Task", Duration.ofHours(6));
 
-        long countBefore= taskRepository.count();
+        long countBefore = taskRepository.count();
         taskRepository.save(toBeSaved);
-        long countAfter= taskRepository.count();
+        long countAfter = taskRepository.count();
 
-        assertEquals(countBefore+1,countAfter);
+        assertEquals(countBefore + 1, countAfter);
         assertEquals(toBeSaved, taskRepository.findById(toBeSaved.getId()).orElse(null));
     }
 
     @Test
     void save_updates_entity_when_id_is_present() {
-        Task toBeSaved=new Task(2,"Updated Task",Duration.ofMinutes(420));
+        Task toBeSaved = new Task(2, "Updated Task", Duration.ofMinutes(420));
 
-        long countBefore= taskRepository.count();
+        long countBefore = taskRepository.count();
         taskRepository.save(toBeSaved);
-        long countAfter= taskRepository.count();
+        long countAfter = taskRepository.count();
 
-        assertEquals(countBefore,countAfter);
+        assertEquals(countBefore, countAfter);
         assertEquals(toBeSaved, taskRepository.findById(toBeSaved.getId()).orElse(null));
 
     }
 
     @Test
     void save_adds_entities_when_id_is_not_present() {
-        Task m1=new Task(13453,"Updated Task1",Duration.ofMinutes(200));
-        Task m2=new Task(12345,"Updated Task2",Duration.ofMinutes(500));
-        Task m3=new Task(13345,"Updated Task3",Duration.ofMinutes(300));
-        List<Task> toBeSaved=new ArrayList<>();
+        Task m1 = new Task(13453, "Updated Task1", Duration.ofMinutes(200));
+        Task m2 = new Task(12345, "Updated Task2", Duration.ofMinutes(500));
+        Task m3 = new Task(13345, "Updated Task3", Duration.ofMinutes(300));
+        List<Task> toBeSaved = new ArrayList<>();
         toBeSaved.add(m1);
         toBeSaved.add(m2);
         toBeSaved.add(m3);
 
-        long countBefore= taskRepository.count();
+        long countBefore = taskRepository.count();
         taskRepository.saveAll(toBeSaved);
-        long countAfter= taskRepository.count();
+        long countAfter = taskRepository.count();
 
-        assertEquals(countBefore + toBeSaved.size(),countAfter);
+        assertEquals(countBefore + toBeSaved.size(), countAfter);
         for (int i = 0; i < toBeSaved.size(); i++) {
             assertEquals(toBeSaved.get(i), taskRepository.findById(toBeSaved.get(i).getId()).orElse(null));
         }
@@ -162,19 +161,19 @@ public class InMemoryTaskRepositoryTest {
 
     @Test
     void saveAll_updates_entity_when_id_is_present() {
-        Task m1=new Task(1,"Updated Task1",Duration.ofMinutes(360));
-        Task m2=new Task(2,"Updated Task2",Duration.ofMinutes(300));
-        Task m3=new Task(3,"Updated Task3",Duration.ofMinutes(90));
-        List<Task> toBeSaved=new ArrayList<>();
+        Task m1 = new Task(1, "Updated Task1", Duration.ofMinutes(360));
+        Task m2 = new Task(2, "Updated Task2", Duration.ofMinutes(300));
+        Task m3 = new Task(3, "Updated Task3", Duration.ofMinutes(90));
+        List<Task> toBeSaved = new ArrayList<>();
         toBeSaved.add(m1);
         toBeSaved.add(m2);
         toBeSaved.add(m3);
 
-        long countBefore= taskRepository.count();
+        long countBefore = taskRepository.count();
         taskRepository.saveAll(toBeSaved);
-        long countAfter= taskRepository.count();
+        long countAfter = taskRepository.count();
 
-        assertEquals(countBefore,countAfter);
+        assertEquals(countBefore, countAfter);
         for (int i = 0; i < toBeSaved.size(); i++) {
             assertEquals(toBeSaved.get(i), taskRepository.findById(toBeSaved.get(i).getId()).orElse(null));
         }

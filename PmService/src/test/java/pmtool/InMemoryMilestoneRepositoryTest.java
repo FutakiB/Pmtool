@@ -3,13 +3,13 @@ package pmtool;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class InMemoryMilestoneRepositoryTest {
     static InMemoryMilestoneRepository milestones = new InMemoryMilestoneRepository();
@@ -17,9 +17,9 @@ public class InMemoryMilestoneRepositoryTest {
 
     @BeforeAll
     static void beforeAll() {
-        testData.add(new Milestone(1,"Milestone 1",  LocalDateTime.now(), Duration.ofDays(9)));
-        testData.add(new Milestone(2,"Milestone 2",  LocalDateTime.now(), Duration.ofDays(7)));
-        testData.add(new Milestone(3,"Milestone 3",  LocalDateTime.now(), Duration.ofDays(9)));
+        testData.add(new Milestone(1, "Milestone 1", LocalDateTime.now(), Duration.ofDays(9)));
+        testData.add(new Milestone(2, "Milestone 2", LocalDateTime.now(), Duration.ofDays(7)));
+        testData.add(new Milestone(3, "Milestone 3", LocalDateTime.now(), Duration.ofDays(9)));
     }
 
     @BeforeEach
@@ -30,11 +30,11 @@ public class InMemoryMilestoneRepositoryTest {
 
     @Test
     void findAll_returns_all_entities() {
-        List<Milestone> result=milestones.findAll();
+        List<Milestone> result = milestones.findAll();
 
-        assertEquals(testData.size(),result.size());
+        assertEquals(testData.size(), result.size());
         for (int i = 0; i < result.size(); i++) {
-            assertEquals(testData.get(i),result.get(i));
+            assertEquals(testData.get(i), result.get(i));
         }
     }
 
@@ -45,40 +45,40 @@ public class InMemoryMilestoneRepositoryTest {
         ids.add(2);
         ids.add(3);
 
-        List<Milestone> result=milestones.findAllById(ids);
+        List<Milestone> result = milestones.findAllById(ids);
 
-        assertEquals(testData.size(),result.size());
+        assertEquals(testData.size(), result.size());
         for (int i = 0; i < result.size(); i++) {
             assertEquals(ids.get(i), result.get(i).getId());
-            assertEquals(testData.get(i),result.get(i));
+            assertEquals(testData.get(i), result.get(i));
         }
     }
 
     @Test
     void count_returns_correct_value() {
-        long result=milestones.count();
+        long result = milestones.count();
 
-        assertEquals(testData.size(),result);
+        assertEquals(testData.size(), result);
     }
 
     @Test
     void deleteById_removes_entity_with_given_id() {
         milestones.deleteById(1);
 
-        assertEquals(testData.size()-1,milestones.count());
+        assertEquals(testData.size() - 1, milestones.count());
         assertFalse(milestones.findById(1).isPresent());
-        assertEquals(testData.get(1),milestones.findById(2).orElse(null));
-        assertEquals(testData.get(2),milestones.findById(3).orElse(null));
+        assertEquals(testData.get(1), milestones.findById(2).orElse(null));
+        assertEquals(testData.get(2), milestones.findById(3).orElse(null));
     }
 
     @Test
     void delete_removes_given_entity() {
         milestones.delete(testData.get(1));
 
-        assertEquals(testData.size()-1,milestones.count());
+        assertEquals(testData.size() - 1, milestones.count());
         assertFalse(milestones.findById(2).isPresent());
-        assertEquals(testData.get(0),milestones.findById(1).orElse(null));
-        assertEquals(testData.get(2),milestones.findById(3).orElse(null));
+        assertEquals(testData.get(0), milestones.findById(1).orElse(null));
+        assertEquals(testData.get(2), milestones.findById(3).orElse(null));
     }
 
     @Test
@@ -89,10 +89,10 @@ public class InMemoryMilestoneRepositoryTest {
 
         milestones.deleteAllById(ids);
 
-        assertEquals(testData.size()-ids.size(),milestones.count());
+        assertEquals(testData.size() - ids.size(), milestones.count());
         assertFalse(milestones.findById(2).isPresent());
         assertFalse(milestones.findById(3).isPresent());
-        assertEquals(testData.get(0),milestones.findById(1).orElse(null));
+        assertEquals(testData.get(0), milestones.findById(1).orElse(null));
     }
 
     @Test
@@ -103,8 +103,8 @@ public class InMemoryMilestoneRepositoryTest {
 
         milestones.deleteAll(toDelete);
 
-        assertEquals(testData.size()-toDelete.size(),milestones.count());
-        assertEquals(testData.get(0),milestones.findById(1).orElse(null));
+        assertEquals(testData.size() - toDelete.size(), milestones.count());
+        assertEquals(testData.get(0), milestones.findById(1).orElse(null));
         assertFalse(milestones.findById(2).isPresent());
         assertFalse(milestones.findById(3).isPresent());
     }
@@ -117,66 +117,66 @@ public class InMemoryMilestoneRepositoryTest {
 
     @Test
     void save_adds_entity_when_id_is_not_present() {
-        Milestone toBeSaved=new Milestone(1234,"New milestone",LocalDateTime.now(),Duration.ofDays(10));
+        Milestone toBeSaved = new Milestone(1234, "New milestone", LocalDateTime.now(), Duration.ofDays(10));
 
-        long countBefore=milestones.count();
+        long countBefore = milestones.count();
         milestones.save(toBeSaved);
-        long countAfter=milestones.count();
+        long countAfter = milestones.count();
 
-        assertEquals(countBefore+1,countAfter);
-        assertEquals(toBeSaved,milestones.findById(toBeSaved.getId()).orElse(null));
+        assertEquals(countBefore + 1, countAfter);
+        assertEquals(toBeSaved, milestones.findById(toBeSaved.getId()).orElse(null));
     }
 
     @Test
     void save_updates_entity_when_id_is_present() {
-        Milestone toBeSaved=new Milestone(2,"Updated milestone",LocalDateTime.now(),Duration.ofDays(31));
+        Milestone toBeSaved = new Milestone(2, "Updated milestone", LocalDateTime.now(), Duration.ofDays(31));
 
-        long countBefore=milestones.count();
+        long countBefore = milestones.count();
         milestones.save(toBeSaved);
-        long countAfter=milestones.count();
+        long countAfter = milestones.count();
 
-        assertEquals(countBefore,countAfter);
-        assertEquals(toBeSaved,milestones.findById(toBeSaved.getId()).orElse(null));
+        assertEquals(countBefore, countAfter);
+        assertEquals(toBeSaved, milestones.findById(toBeSaved.getId()).orElse(null));
 
     }
 
     @Test
     void save_adds_entities_when_id_is_not_present() {
-        Milestone m1=new Milestone(13453,"Updated milestone1",LocalDateTime.now(),Duration.ofDays(31));
-        Milestone m2=new Milestone(12345,"Updated milestone2",LocalDateTime.now(),Duration.ofDays(31));
-        Milestone m3=new Milestone(13345,"Updated milestone3",LocalDateTime.now(),Duration.ofDays(31));
-        List<Milestone> toBeSaved=new ArrayList<>();
+        Milestone m1 = new Milestone(13453, "Updated milestone1", LocalDateTime.now(), Duration.ofDays(31));
+        Milestone m2 = new Milestone(12345, "Updated milestone2", LocalDateTime.now(), Duration.ofDays(31));
+        Milestone m3 = new Milestone(13345, "Updated milestone3", LocalDateTime.now(), Duration.ofDays(31));
+        List<Milestone> toBeSaved = new ArrayList<>();
         toBeSaved.add(m1);
         toBeSaved.add(m2);
         toBeSaved.add(m3);
 
-        long countBefore=milestones.count();
+        long countBefore = milestones.count();
         milestones.saveAll(toBeSaved);
-        long countAfter=milestones.count();
+        long countAfter = milestones.count();
 
-        assertEquals(countBefore + toBeSaved.size(),countAfter);
+        assertEquals(countBefore + toBeSaved.size(), countAfter);
         for (int i = 0; i < toBeSaved.size(); i++) {
-            assertEquals(toBeSaved.get(i),milestones.findById(toBeSaved.get(i).getId()).orElse(null));
+            assertEquals(toBeSaved.get(i), milestones.findById(toBeSaved.get(i).getId()).orElse(null));
         }
     }
 
     @Test
     void saveAll_updates_entity_when_id_is_present() {
-        Milestone m1=new Milestone(1,"Updated milestone1",LocalDateTime.now(),Duration.ofDays(31));
-        Milestone m2=new Milestone(2,"Updated milestone2",LocalDateTime.now(),Duration.ofDays(31));
-        Milestone m3=new Milestone(3,"Updated milestone3",LocalDateTime.now(),Duration.ofDays(31));
-        List<Milestone> toBeSaved=new ArrayList<>();
+        Milestone m1 = new Milestone(1, "Updated milestone1", LocalDateTime.now(), Duration.ofDays(31));
+        Milestone m2 = new Milestone(2, "Updated milestone2", LocalDateTime.now(), Duration.ofDays(31));
+        Milestone m3 = new Milestone(3, "Updated milestone3", LocalDateTime.now(), Duration.ofDays(31));
+        List<Milestone> toBeSaved = new ArrayList<>();
         toBeSaved.add(m1);
         toBeSaved.add(m2);
         toBeSaved.add(m3);
 
-        long countBefore=milestones.count();
+        long countBefore = milestones.count();
         milestones.saveAll(toBeSaved);
-        long countAfter=milestones.count();
+        long countAfter = milestones.count();
 
-        assertEquals(countBefore,countAfter);
+        assertEquals(countBefore, countAfter);
         for (int i = 0; i < toBeSaved.size(); i++) {
-            assertEquals(toBeSaved.get(i),milestones.findById(toBeSaved.get(i).getId()).orElse(null));
+            assertEquals(toBeSaved.get(i), milestones.findById(toBeSaved.get(i).getId()).orElse(null));
         }
     }
 
