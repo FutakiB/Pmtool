@@ -74,23 +74,23 @@ public class Task {
         subtask.setParentTaskId(id);
     }
 
-    public void removeSubtask(Task subtask) {
+    private void removeSubtask(Task subtask) {
         subtasks.remove(subtask);
     }
 
-    public void addAssignedUser(User assignedUser) {
+    private void addAssignedUser(User assignedUser) {
         assignedUsers.add(assignedUser);
     }
 
-    public void removeAssignedUser(User assignedUser) {
+    private void removeAssignedUser(User assignedUser) {
         assignedUsers.remove(assignedUser);
     }
 
-    public List<Task> getSubtasks() {
+    private List<Task> getSubtasks() {
         return subtasks;
     }
 
-    public void setSubtasks(List<Task> subtasks) {
+    private void setSubtasks(List<Task> subtasks) {
         this.subtasks = subtasks;
     }
 
