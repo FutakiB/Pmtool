@@ -2,20 +2,23 @@ package pmtool;
 
 //Leszállítandó
 public class Delivery {
+    static private Integer counter = 0;
     private Integer id;
     private Integer milestoneId;
     private String name;
     private DeliveryType type;
 
-    public Delivery(Integer id, String name, DeliveryType type, Integer milestoneID) {
-        this.id = id;
+    public Delivery(String name, DeliveryType type, Integer milestoneID) {
+        this.id = counter;
+        counter++;
         this.name = name;
         this.type = type;
         this.milestoneId = milestoneID;
     }
 
     public Delivery() {
-        this.id = null;
+        this.id = counter;
+        counter++;
         this.milestoneId = null;
         this.name = "New delivery";
         this.type = DeliveryType.ARTIFACT;

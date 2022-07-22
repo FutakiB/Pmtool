@@ -18,9 +18,9 @@ class InMemoryDeliveryRepositoryTest {
         boolean deliveryType = true;
         for (int i = 0; i < 5; i++) {
             if (deliveryType) {
-                deliveries.add(new Delivery(i, "Test " + i,DeliveryType.ARTIFACT,1));
+                deliveries.add(new Delivery("Test " + i,DeliveryType.ARTIFACT,1));
             }else {
-                deliveries.add(new Delivery(i, "Test " + i,DeliveryType.DOCUMENT,1));
+                deliveries.add(new Delivery("Test " + i,DeliveryType.DOCUMENT,1));
             }
             deliveryType = !deliveryType;
         }
@@ -89,7 +89,7 @@ class InMemoryDeliveryRepositoryTest {
 
     @Test
     void testsave() {
-        Delivery d = new Delivery(100, "SaveTest", DeliveryType.ARTIFACT, 1);
+        Delivery d = new Delivery("SaveTest", DeliveryType.ARTIFACT, 1);
         Delivery result = repository.save(d);
         assertTrue(repository.db.contains(result));
         assertTrue(repository.db.contains(d));
@@ -99,8 +99,8 @@ class InMemoryDeliveryRepositoryTest {
 
     @Test
     void testsaveAll() {
-        Delivery d1 = new Delivery(100, "SaveTest1", DeliveryType.ARTIFACT, 1);
-        Delivery d2 = new Delivery(101, "SaveTest2", DeliveryType.DOCUMENT, 1);
+        Delivery d1 = new Delivery("SaveTest1", DeliveryType.ARTIFACT, 1);
+        Delivery d2 = new Delivery("SaveTest2", DeliveryType.DOCUMENT, 1);
         ArrayList<Delivery> del = new ArrayList<>();
         ArrayList<Delivery> result;
         del.add(d1);

@@ -6,16 +6,19 @@ public class User {
         Manager,
         Analyst
     }
-
+    static private Integer counter = 0;
     private String name;
-    private Integer id;
+    private final Integer id;
     private role role;
 
-    public User(String name, Integer id, User.role role) {
+
+    public User(String name, User.role role) {
         this.name = name;
-        this.id = id;
+        this.id = counter;
+        counter++;
         this.role = role;
     }
+
 
     public Integer getId() {
         return id;
