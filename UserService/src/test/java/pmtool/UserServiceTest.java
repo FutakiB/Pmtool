@@ -8,8 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class UserServiceTest {
 
@@ -73,18 +72,29 @@ class UserServiceTest {
     }
 
     @Test
-    void save_updates_entity_when_id_is_present() {
+    void save_calls_save_in_userRepository_and_returns_saved_entity() {
+        User user = new User(1, "User", User.Role.MANAGER);
+        when(mockUserRepository.save(user)).thenReturn(user);
+
+        User result = userService.save(user);
+
+        verify(mockUserRepository, times(1)).save(user);
+        assertEquals(user, result);
     }
 
     @Test
-    void save_adds_entities_when_id_is_not_present() {
+    void delete_calls_delete_in_userRepository() {
+        User user = new User(1, "User", User.Role.MANAGER);
+
+        userService.delete(user);
+
+        verify(mockUserRepository, times(1)).delete(user);
     }
 
     @Test
-    void delete_removes_given_entity() {
-    }
+    void delete_calls_deleteById_in_userRepository() {
+        userService.delete(1);
 
-    @Test
-    void delete_removes_entity_with_given_id() {
+        verify(mockUserRepository, times(1)).deleteById(1);
     }
 }
