@@ -51,11 +51,13 @@ public class PmService implements ProjectManagement {
     @Override
     public void removeProject(Project project) {
         projectRepository.delete(project);
+        //TODO: remove all milestones, deliveries and tasks from this project
     }
 
     @Override
     public void removeMilestone(Milestone milestone) {
         milestoneRepository.delete(milestone);
+        //TODO: remove all deliveries and tasks from this milestone
     }
 
     @Override
@@ -66,6 +68,7 @@ public class PmService implements ProjectManagement {
     @Override
     public void removeTask(Task task) {
         taskRepository.delete(task);
+        //TODO: remove all subtasks from this task
     }
 
     @Override

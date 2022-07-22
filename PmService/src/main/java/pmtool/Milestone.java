@@ -14,6 +14,14 @@ public class Milestone {
     private List<Task> tasks;
     private List<Delivery> deliveries;
 
+    public Milestone(Integer id, Integer projectId, String name, LocalDateTime dueDate, Duration requiredTime) {
+        this.id = id;
+        this.projectId = projectId;
+        this.name = name;
+        this.dueDate = dueDate;
+        this.requiredTime = requiredTime;
+    }
+
     public Milestone(int id, String name, LocalDateTime dueDate, Duration requiredTime) {
         this.id = id;
         this.name = name;
