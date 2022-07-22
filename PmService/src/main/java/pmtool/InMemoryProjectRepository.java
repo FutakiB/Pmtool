@@ -9,28 +9,26 @@ import org.springframework.data.repository.query.FluentQuery;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 
 public class InMemoryProjectRepository implements JpaRepository<Project, Integer> {
 
-    private final List<Project> projects;
-    private Map<Integer, Project> projectMap;
+    private final List<Project> db;
 
     private static int id = 0;
 
     public InMemoryProjectRepository() {
-        projects = new ArrayList<>();
+        db = new ArrayList<>();
     }
 
-    List<Project> getProjects() {
-        return projects;
+    List<Project> getDb() {
+        return db;
     }
 
     @Override
     public List<Project> findAll() {
-        return projects;
+        return db;
     }
 
     @Override
@@ -54,57 +52,60 @@ public class InMemoryProjectRepository implements JpaRepository<Project, Integer
 
     @Override
     public long count() {
-        return projects.size();
+        return db.size();
     }
 
     @Override
     public void deleteById(Integer integer) {
-        projects.removeIf(p -> p.getId() == integer);
+        db.removeIf(p -> p.getId() == integer);
     }
 
     @Override
     public void delete(Project entity) {
-        projects.remove(entity);
+        db.remove(entity);
     }
 
     @Override
     public void deleteAllById(Iterable<? extends Integer> integers) {
-        integers.forEach(i -> projects.removeIf(p -> p.getId() == i));
+        integers.forEach(i -> db.removeIf(p -> p.getId() == i));
     }
 
     @Override
     public void deleteAll(Iterable<? extends Project> entities) {
-        entities.forEach(projects::remove);
+        entities.forEach(db::remove);
     }
 
     @Override
     public void deleteAll() {
-        projects.clear();
+        db.clear();
     }
 
     @Override
     public <S extends Project> S save(S entity) {
-        entity.setId(++id);
-        projects.add(entity);
+        Optional<Project> project = findById(entity.getId());
+        if (project.isPresent()) {
+            db.set(db.indexOf(project.get()), entity);
+        } else {
+            entity.setId(++id);
+            db.add(entity);
+        }
         return entity;
     }
 
     @Override
     public <S extends Project> List<S> saveAll(Iterable<S> entities) {
-        entities.forEach(e -> {
-            save(e);
-        });
-        return (List<S>) projects;
+        entities.forEach(this::save);
+        return (List<S>) db;
     }
 
     @Override
     public Optional<Project> findById(Integer integer) {
-        return projects.stream().filter(p -> p.getId() == integer).findFirst();
+        return db.stream().filter(p -> p.getId() == integer).findFirst();
     }
 
     @Override
     public boolean existsById(Integer integer) {
-        return projects.stream().anyMatch(p -> p.getId() == integer);
+        return db.stream().anyMatch(p -> p.getId() == integer);
     }
 
     @Override

@@ -13,9 +13,14 @@ import java.util.Optional;
 import java.util.function.Function;
 
 public class InMemoryMilestoneRepository implements JpaRepository<Milestone, Integer> {
-    private List<Milestone> db;
+    private final List<Milestone> db;
+
+    public List<Milestone> getDb() {
+        return db;
+    }
+
     public InMemoryMilestoneRepository() {
-        db = new ArrayList<Milestone>();
+        db = new ArrayList<>();
     }
 
     @Override
@@ -35,7 +40,7 @@ public class InMemoryMilestoneRepository implements JpaRepository<Milestone, Int
 
     @Override
     public List<Milestone> findAllById(Iterable<Integer> ids) {
-        List<Milestone> results = new ArrayList<Milestone>();
+        List<Milestone> results = new ArrayList<>();
 
         for (Integer id : ids) {
             findById(id).ifPresent(results::add);
@@ -76,7 +81,7 @@ public class InMemoryMilestoneRepository implements JpaRepository<Milestone, Int
 
     @Override
     public <S extends Milestone> S save(S entity) {
-        Optional milestone=findById(entity.getId());
+        Optional<Milestone> milestone = findById(entity.getId());
         if (milestone.isPresent()){
             db.set(db.indexOf(milestone.get()),entity);
         }else{

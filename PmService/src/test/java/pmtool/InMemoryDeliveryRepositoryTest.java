@@ -5,7 +5,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Optional;
 import java.util.Random;
 
@@ -19,9 +18,9 @@ class InMemoryDeliveryRepositoryTest {
         boolean deliveryType = true;
         for (int i = 0; i < 5; i++) {
             if (deliveryType) {
-                deliveries.add(new Delivery(i, "Test " + i,DeliveryType.ARTIFACT,1));
+                deliveries.add(new Delivery("Test " + i,DeliveryType.ARTIFACT,1));
             }else {
-                deliveries.add(new Delivery(i, "Test " + i,DeliveryType.DOCUMENT,1));
+                deliveries.add(new Delivery("Test " + i,DeliveryType.DOCUMENT,1));
             }
             deliveryType = !deliveryType;
         }
@@ -57,7 +56,7 @@ class InMemoryDeliveryRepositoryTest {
         Random rnd = new Random();
         Integer n = rnd.nextInt(deliveries.size());
         repository.deleteById(n);
-        assertEquals(deliveries.size(), repository.deliveries.size() + 1);
+        assertEquals(deliveries.size(), repository.db.size() + 1);
     }
 
     @Test
@@ -66,7 +65,7 @@ class InMemoryDeliveryRepositoryTest {
         int n = rnd.nextInt(deliveries.size());
         Delivery d = deliveries.get(n);
         repository.delete(d);
-        assertEquals(deliveries.size(), repository.deliveries.size() + 1);
+        assertEquals(deliveries.size(), repository.db.size() + 1);
 
     }
 
@@ -76,7 +75,7 @@ class InMemoryDeliveryRepositoryTest {
         integers.add(deliveries.size()-1);
         integers.add(deliveries.size()-2);
         repository.deleteAllById(integers);
-        assertEquals(deliveries.size(), repository.deliveries.size() + 2);
+        assertEquals(deliveries.size(), repository.db.size() + 2);
 
 
     }
@@ -85,30 +84,31 @@ class InMemoryDeliveryRepositoryTest {
     @Test
     void testdeleteAll() {
         repository.deleteAll();
-        assertEquals(0, repository.deliveries.size());
+        assertEquals(0, repository.db.size());
     }
 
     @Test
     void testsave() {
-        Delivery d = new Delivery(100, "SaveTest", DeliveryType.ARTIFACT, 1);
+        Delivery d = new Delivery("SaveTest", DeliveryType.ARTIFACT, 1);
         Delivery result = repository.save(d);
-        assertTrue(repository.deliveries.contains(result));
-        assertTrue(repository.deliveries.contains(d));
+        assertTrue(repository.db.contains(result));
+        assertTrue(repository.db.contains(d));
 
 
     }
 
     @Test
     void testsaveAll() {
-        Delivery d1 = new Delivery(100, "SaveTest1", DeliveryType.ARTIFACT, 1);
-        Delivery d2 = new Delivery(101, "SaveTest2", DeliveryType.DOCUMENT, 1);
+        Delivery d1 = new Delivery("SaveTest1", DeliveryType.ARTIFACT, 1);
+        Delivery d2 = new Delivery("SaveTest2", DeliveryType.DOCUMENT, 1);
         ArrayList<Delivery> del = new ArrayList<>();
         ArrayList<Delivery> result;
         del.add(d1);
+
         del.add(d2);
-        result = repository.saveAll(del);
-        assertTrue(repository.deliveries.containsAll(result));
-        assertTrue(repository.deliveries.containsAll(del));
+        result = (ArrayList<Delivery>) repository.saveAll(del);
+        assertTrue(repository.db.containsAll(result));
+        assertTrue(repository.db.containsAll(del));
     }
 
     @Test
@@ -127,7 +127,7 @@ class InMemoryDeliveryRepositoryTest {
     @Test
     void testflush() {
         repository.flush();
-        assertEquals(repository.deliveries.size(),0);
+        assertEquals(repository.db.size(), 0);
     }
 
     @Test

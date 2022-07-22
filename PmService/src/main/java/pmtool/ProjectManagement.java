@@ -29,8 +29,6 @@ public interface ProjectManagement {
 
     List<Task> getAllTasks();
 
-    List<Task> getAllSubTasks();
-
     List<Milestone> getAllMilestonesByProject(Project project);
 
     List<Delivery> getAllDeliveriesByMilestone(Milestone milestone);

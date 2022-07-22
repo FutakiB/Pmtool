@@ -20,7 +20,9 @@ public class Main {
         Task subtask = new Task();
         pmService.addTask(task, subtask);
 
-        System.out.println("Project added: " + project);
+        System.out.println(pmService.getAllMilestonesByProject(project));
+
+//        System.out.println("Project added: " + project);
     }
 
 

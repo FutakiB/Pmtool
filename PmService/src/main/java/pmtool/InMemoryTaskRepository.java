@@ -13,7 +13,12 @@ import java.util.Optional;
 import java.util.function.Function;
 
 public class InMemoryTaskRepository implements JpaRepository<Task, Integer> {
-    private List<Task> db;
+    private final List<Task> db;
+
+    public List<Task> getDb() {
+        return db;
+    }
+
     public InMemoryTaskRepository() {
         db = new ArrayList<Task>();
     }
@@ -35,7 +40,7 @@ public class InMemoryTaskRepository implements JpaRepository<Task, Integer> {
 
     @Override
     public List<Task> findAllById(Iterable<Integer> ids) {
-        List<Task> results = new ArrayList<Task>();
+        List<Task> results = new ArrayList<>();
 
         for (Integer id : ids) {
             findById(id).ifPresent(results::add);
