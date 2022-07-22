@@ -1,6 +1,5 @@
 package pmtool;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -124,10 +123,8 @@ public class PmService implements ProjectManagement {
 
     @Override
     public List<Task> getAllTasksByProject(Project project) {
-        List<Task> result = new ArrayList<>();
-        for (Milestone milestone : project.getMilestones()) {
-            result.addAll(milestone.getTasks());
-        }
-        return result;
+        return taskRepository.findAll().stream()
+                .filter(t -> t.getProjectId() == project.getId())
+                .collect(Collectors.toList());
     }
 }

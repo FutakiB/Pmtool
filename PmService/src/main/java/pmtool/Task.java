@@ -50,16 +50,12 @@ public class Task {
     public void setMilestoneId(int milestoneId) {
         this.milestoneId = milestoneId;
     }
-
-
     public List<User> getAssignedUsers() {
         return assignedUsers;
     }
-
     public void setAssignedUsers(List<User> assignedUsers) {
         this.assignedUsers = assignedUsers;
     }
-
     public void addSubtask(Task subtask) {
 //        subtasks.add(subtask);
         subtask.setMilestoneId(milestoneId);
@@ -67,15 +63,15 @@ public class Task {
         subtask.setParentTaskId(id);
     }
 
-    public void removeSubtask(Task subtask){
+    public void removeSubtask(Task subtask) {
         subtasks.remove(subtask);
     }
 
-    public void addAssignedUser(User assignedUser){
+    public void addAssignedUser(User assignedUser) {
         assignedUsers.add(assignedUser);
     }
 
-    public void removeAssignedUser(User assignedUser){
+    public void removeAssignedUser(User assignedUser) {
         assignedUsers.remove(assignedUser);
     }
 
