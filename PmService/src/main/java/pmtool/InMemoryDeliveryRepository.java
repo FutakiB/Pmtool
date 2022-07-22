@@ -14,7 +14,7 @@ import java.util.function.Function;
 
 public class InMemoryDeliveryRepository implements JpaRepository<Delivery, Integer> {
 
-    private final ArrayList<Delivery> db;
+    final ArrayList<Delivery> db;
 
     public ArrayList<Delivery> getDb() {
         return db;
@@ -87,12 +87,12 @@ public class InMemoryDeliveryRepository implements JpaRepository<Delivery, Integ
 
     @Override
     public <S extends Delivery> List<S> saveAll(Iterable<S> entities) {
-        List<S>saved = new ArrayList<>();
+        List<Delivery> saved = new ArrayList<>();
         for (S s:entities) {
             saved.add(s);
             db.add(s);
         }
-        return saved;
+        return (List<S>) saved;
     }
 
     @Override
