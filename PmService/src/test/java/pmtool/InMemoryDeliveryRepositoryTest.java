@@ -5,7 +5,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Optional;
 import java.util.Random;
 
@@ -105,6 +104,7 @@ class InMemoryDeliveryRepositoryTest {
         ArrayList<Delivery> del = new ArrayList<>();
         ArrayList<Delivery> result;
         del.add(d1);
+
         del.add(d2);
         result = repository.saveAll(del);
         assertTrue(repository.deliveries.containsAll(result));
