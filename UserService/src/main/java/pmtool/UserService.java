@@ -26,7 +26,7 @@ public class UserService implements UserManagement {
     }
 
     @Override
-    public List<User> getUsersByRole(User.role role) {
+    public List<User> getUsersByRole(User.Role role) {
         return userRepository.findAll().stream().filter(user -> user.getRole() == role).toList();
     }
 

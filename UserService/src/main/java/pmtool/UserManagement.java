@@ -10,7 +10,7 @@ public interface UserManagement {
 
     public List<User> getUsersByName(String name);
 
-    public List<User> getUsersByRole(User.role role);
+    public List<User> getUsersByRole(User.Role role);
 
     User save(User user);
 
