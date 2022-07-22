@@ -1,19 +1,17 @@
 package pmtool;
 
 import java.time.Duration;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Task {
-    private int id;
+    private Integer id;
+    private Integer projectId;
+    private Integer milestoneId;
+    private Integer parentTaskId;
     private String name;
     private Duration requiredTime;
     private List<Task> subtasks;
     private List<User> assignedUsers;
-    private int milestoneId;
-    private int projectId;
-
-    private int parentTaskId;
 
     public Task(int id, String name, Duration requiredTime) {
         this.id = id;
@@ -24,6 +22,17 @@ public class Task {
     public Task(String name, Duration requiredTime) {
         this.name = name;
         this.requiredTime = requiredTime;
+    }
+
+    public Task() {
+        this.id = null;
+        this.projectId = null;
+        this.milestoneId = null;
+        this.parentTaskId = null;
+        this.name = "New task";
+        this.requiredTime = Duration.ZERO;
+//        this.subtasks = new ArrayList<>();
+//        this.assignedUsers = new ArrayList<>();
     }
 
     public int getProjectId() {
@@ -42,12 +51,6 @@ public class Task {
         this.milestoneId = milestoneId;
     }
 
-    public Task() {
-        this.name = "New task";
-        this.requiredTime = Duration.ZERO;
-        this.subtasks = new ArrayList<>();
-        this.assignedUsers = new ArrayList<>();
-    }
 
     public List<User> getAssignedUsers() {
         return assignedUsers;

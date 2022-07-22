@@ -1,11 +1,10 @@
 package pmtool;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Project {
-    private int id;
+    private Integer id;
     private String name;
     private ProjectStatus status;
     private LocalDateTime startTime;
@@ -23,13 +22,13 @@ public class Project {
     }
 
     public Project() {
-//        this.id = 0;
+        this.id = null;
         this.name = "New project";
         this.status = ProjectStatus.IN_PROGRESS;
         this.startTime = LocalDateTime.now();
         this.clientName = "";
         this.backOfficeName = "";
-        milestones = new ArrayList<>();
+//        milestones = new ArrayList<>();
     }
 
     public List<Milestone> getMilestones() {

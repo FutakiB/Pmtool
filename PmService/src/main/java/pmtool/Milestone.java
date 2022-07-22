@@ -2,18 +2,17 @@ package pmtool;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class Milestone {
-    private int id;
+    private Integer id;
+    private Integer projectId;
     private String name;
     private LocalDateTime dueDate;
     private Duration requiredTime;
     private List<Task> tasks;
     private List<Delivery> deliveries;
-    private int projectId;
 
     public Milestone(int id, String name, LocalDateTime dueDate, Duration requiredTime) {
         this.id = id;
@@ -23,11 +22,13 @@ public class Milestone {
     }
 
     public Milestone() {
+        this.id = null;
+        this.projectId = null;
         this.name = "New milestone";
         this.dueDate = LocalDateTime.now();
         this.requiredTime = Duration.ZERO;
-        this.tasks = new ArrayList<>();
-        this.deliveries = new ArrayList<>();
+//        this.tasks = new ArrayList<>();
+//        this.deliveries = new ArrayList<>();
     }
 
     public int getProjectId() {

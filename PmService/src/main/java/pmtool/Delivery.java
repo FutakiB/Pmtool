@@ -3,9 +3,9 @@ package pmtool;
 //Leszállítandó
 public class Delivery {
     private Integer id;
+    private Integer milestoneId;
     private String name;
     private DeliveryType type;
-    private Integer milestoneId;
 
     public Delivery(Integer id, String name, DeliveryType type, Integer milestoneID) {
         this.id = id;
@@ -15,6 +15,8 @@ public class Delivery {
     }
 
     public Delivery() {
+        this.id = null;
+        this.milestoneId = null;
         this.name = "New delivery";
         this.type = DeliveryType.ARTIFACT;
     }
