@@ -61,6 +61,7 @@ public class Task {
 //        subtasks.add(subtask);
         subtask.setMilestoneId(milestoneId);
         subtask.setProjectId(this.projectId);
+        subtask.setParentTaskId(id);
     }
 
     public void removeSubtask(Task subtask){
