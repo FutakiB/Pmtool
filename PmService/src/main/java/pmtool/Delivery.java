@@ -16,6 +16,13 @@ public class Delivery {
         this.milestoneId = milestoneID;
     }
 
+    public Delivery(Integer id, String name, DeliveryType type, Integer milestoneID) {
+        this.id = id;
+        this.name = name;
+        this.type = type;
+        this.milestoneId = milestoneID;
+    }
+
     public Delivery() {
         this.id = counter;
         counter++;

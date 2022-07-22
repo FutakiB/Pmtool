@@ -52,9 +52,11 @@ class PmServiceTest {
 
     @Test
     void addMilestone() {
-//        Milestone milestone = new Milestone(4, 4, "Milestone 4", LocalDateTime.now(), Duration.ZERO);
-//        pmService.addMilestone(projectRepository.findById(1), milestone);
-//        assertEquals(4, milestoneRepository.findAll().size());
+        Milestone milestone = new Milestone(4, 4, "Milestone 4", LocalDateTime.now(), Duration.ZERO);
+        Project p = new Project(1, "Project 4", ProjectStatus.IN_PROGRESS, LocalDateTime.now(), "Client 4", "BackOffice 4");
+        pmService.addProject(p);
+        pmService.addMilestone(p, milestone);
+        assertEquals(4, milestoneRepository.findAll().size());
     }
 
     @Test
@@ -66,16 +68,16 @@ class PmServiceTest {
 
     @Test
     void addTask() {
-//        Task task = new Task(4, 4, 4, null, "Task 4", Duration.ZERO);
-//        pmService.addTask(milestoneRepository.getOne(1), task);
-//        assertEquals(4, taskRepository.findAll().size());
+        Task task = new Task(10, 1, 1, null, "Task 4", Duration.ZERO);
+        pmService.addTask(milestoneRepository.getOne(1), task);
+        assertEquals(7, taskRepository.findAll().size());
     }
 
     @Test
-    void testAddTask() {
-//        Task task = new Task(4, 4, 4, null, "Task 4", Duration.ZERO);
-//        pmService.addTask(taskRepository.getOne(1), task);
-//        assertEquals(4, taskRepository.findAll().size());
+    void testAddSubTask() {
+        Task task = new Task(11, 1, 1, taskRepository.getOne(1).getId(), "Task 4", Duration.ZERO);
+        pmService.addTask(taskRepository.getOne(1), task);
+        assertEquals(7, taskRepository.findAll().size());
     }
 
     @Test
