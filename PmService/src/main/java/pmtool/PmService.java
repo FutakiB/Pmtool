@@ -2,6 +2,7 @@ package pmtool;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PmService implements ProjectManagement {
     private final InMemoryProjectRepository projectRepository;
@@ -95,22 +96,30 @@ public class PmService implements ProjectManagement {
 
     @Override
     public List<Milestone> getAllMilestonesByProject(Project project) {
-        return project.getMilestones();
+        return milestoneRepository.findAll().stream()
+                .filter(t -> t.getProjectId() == project.getId())
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<Delivery> getAllDeliveriesByMilestone(Milestone milestone) {
-        return milestone.getDeliveries();
+        return deliveryRepository.findAll().stream()
+                .filter(t -> t.getMilestoneId() == milestone.getId())
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<Task> getAllTasksByMilestone(Milestone milestone) {
-        return milestone.getTasks();
+        return taskRepository.findAll().stream()
+                .filter(t -> t.getMilestoneId() == milestone.getId())
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<Task> getAllSubTasksByTask(Task task) {
-        return task.getSubtasks();
+        return taskRepository.findAll().stream()
+                .filter(t -> t.getParentTaskId() == task.getId())
+                .collect(Collectors.toList());
     }
 
     @Override

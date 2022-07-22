@@ -41,7 +41,8 @@ public class Project {
     }
 
     public void addMilestone(Milestone milestone) {
-        milestones.add(milestone);
+//        milestones.add(milestone);
+        milestone.setProjectId(id);
     }
 
     public void removeMilestone(Milestone milestone) {

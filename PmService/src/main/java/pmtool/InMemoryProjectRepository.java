@@ -9,12 +9,15 @@ import org.springframework.data.repository.query.FluentQuery;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 
 public class InMemoryProjectRepository implements JpaRepository<Project, Integer> {
 
     private final List<Project> projects;
+    private Map<Integer, Project> projectMap;
+
     private static int id = 0;
 
     public InMemoryProjectRepository() {

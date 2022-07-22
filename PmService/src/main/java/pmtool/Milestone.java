@@ -13,6 +13,7 @@ public class Milestone {
     private Duration requiredTime;
     private List<Task> tasks;
     private List<Delivery> deliveries;
+    private int projectId;
 
     public Milestone(int id, String name, LocalDateTime dueDate, Duration requiredTime) {
         this.id = id;
@@ -27,6 +28,14 @@ public class Milestone {
         this.requiredTime = Duration.ZERO;
         this.tasks = new ArrayList<>();
         this.deliveries = new ArrayList<>();
+    }
+
+    public int getProjectId() {
+        return projectId;
+    }
+
+    void setProjectId(int projectId) {
+        this.projectId = projectId;
     }
 
     public List<Task> getTasks() {
@@ -52,15 +61,17 @@ public class Milestone {
     }
 
     public void addTask(Task task) {
-        tasks.add(task);
+//        tasks.add(task);
+        task.setMilestoneId(id);
     }
 
     public void removeSubtask(Task task){
         tasks.remove(task);
     }
 
-    public void addDelivery(Delivery delivery){
-        deliveries.add(delivery);
+    public void addDelivery(Delivery delivery) {
+//        deliveries.add(delivery);
+        delivery.setMilestoneId(id);
     }
 
     public void removeDelivery(Delivery delivery){

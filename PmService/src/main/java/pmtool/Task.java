@@ -10,6 +10,10 @@ public class Task {
     private Duration requiredTime;
     private List<Task> subtasks;
     private List<User> assignedUsers;
+    private int milestoneId;
+    private int projectId;
+
+    private int parentTaskId;
 
     public Task(int id, String name, Duration requiredTime) {
         this.id = id;
@@ -20,6 +24,22 @@ public class Task {
     public Task(String name, Duration requiredTime) {
         this.name = name;
         this.requiredTime = requiredTime;
+    }
+
+    public int getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(int projectId) {
+        this.projectId = projectId;
+    }
+
+    public int getMilestoneId() {
+        return milestoneId;
+    }
+
+    public void setMilestoneId(int milestoneId) {
+        this.milestoneId = milestoneId;
     }
 
     public Task() {
@@ -38,7 +58,9 @@ public class Task {
     }
 
     public void addSubtask(Task subtask) {
-        subtasks.add(subtask);
+//        subtasks.add(subtask);
+        subtask.setMilestoneId(milestoneId);
+        subtask.setProjectId(this.projectId);
     }
 
     public void removeSubtask(Task subtask){
@@ -91,5 +113,13 @@ public class Task {
                 " " + requiredTime
                 + " " + subtasks.size() + " subtasks" +
                 " " + assignedUsers.size() + " assigned users";
+    }
+
+    public int getParentTaskId() {
+        return parentTaskId;
+    }
+
+    public void setParentTaskId(int parentTaskId) {
+        this.parentTaskId = parentTaskId;
     }
 }
