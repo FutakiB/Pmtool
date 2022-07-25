@@ -13,13 +13,13 @@ import java.util.Optional;
 import java.util.function.Function;
 
 public class InMemoryUserRepository implements JpaRepository<User, Integer>{
-    List<User> users;
+    List<User> db;
     public InMemoryUserRepository(){
-        users = new ArrayList<>();
+        db = new ArrayList<>();
     }
     @Override
     public List<User> findAll() {
-        return users;
+        return db;
     }
 
     @Override
@@ -45,17 +45,17 @@ public class InMemoryUserRepository implements JpaRepository<User, Integer>{
 
     @Override
     public long count() {
-        return users.size();
+        return db.size();
     }
 
     @Override
     public void deleteById(Integer integer) {
-        users.remove(integer);
+        db.remove(integer);
     }
 
     @Override
     public void delete(User entity) {
-        users.remove(entity);
+        db.remove(entity);
     }
 
     @Override
@@ -74,12 +74,17 @@ public class InMemoryUserRepository implements JpaRepository<User, Integer>{
 
     @Override
     public void deleteAll() {
-        users.clear();
+        db.clear();
     }
 
     @Override
     public <S extends User> S save(S entity) {
-        users.add(entity);
+        Optional<User> user = findById(entity.getId());
+        if (user.isPresent()) {
+            db.set(db.indexOf(user.get()), entity);
+        } else {
+            db.add(entity);
+        }
         return entity;
     }
 
@@ -94,17 +99,17 @@ public class InMemoryUserRepository implements JpaRepository<User, Integer>{
 
     @Override
     public Optional<User> findById(Integer integer) {
-        return users.stream().filter((user)->user.getId().equals(integer)).findFirst();
+        return db.stream().filter((user) -> user.getId().equals(integer)).findFirst();
     }
 
     @Override
     public boolean existsById(Integer integer) {
-        return users.stream().anyMatch(users -> integer.equals(users.getId()));
+        return db.stream().anyMatch(users -> integer.equals(users.getId()));
     }
 
     @Override
     public void flush() {
-        users.clear();
+        db.clear();
     }
 
     @Override
