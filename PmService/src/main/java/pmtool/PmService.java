@@ -247,6 +247,19 @@ public class PmService implements ProjectManagement {
         }
     }
 
+    @Override
+    public void editMilestoneRequiredTime(Milestone milestone, Duration requiredTime) {
+        if (milestoneRepository.existsById(milestone.getId())) {
+            if (requiredTime.isNegative()) {
+                throw new IllegalArgumentException("Required time cannot be negative");
+            }
+            milestone.setRequiredTime(requiredTime);
+            milestoneRepository.save(milestone);
+        } else {
+            throw new IllegalArgumentException("Milestone does not exist");
+        }
+    }
+
 
     @Override
     public void editDeliveryName(Delivery delivery, String name) throws IllegalArgumentException {
