@@ -82,6 +82,20 @@ class UserServiceTest {
         assertEquals(user, result);
     }
 
+//    @Test
+//    void save_adds_user_when_id_is_not_set() {
+//        User userToBeSaved = new User( "User", User.Role.MANAGER);
+//        User userAfterSave = new User( 1,"User", User.Role.MANAGER);
+//        Optional<User> emptyUser = Optional.empty();
+//        when(mockUserRepository.findById(userToBeSaved.getId())).thenReturn(emptyUser);
+//        when(mockUserRepository.save(userToBeSaved)).thenReturn(userAfterSave);
+//
+//        User result = userService.save(user);
+//
+//        verify(mockUserRepository, times(1)).save(user);
+//        assertEquals(user, result);
+//    }
+
     @Test
     void delete_calls_delete_in_userRepository() {
         User user = new User(1, "User", User.Role.MANAGER);
