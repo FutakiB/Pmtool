@@ -6,9 +6,9 @@ public class User {
         MANAGER,
         ANALYST
     }
-
+    static private Integer counter = 0;
     private String name;
-    private Integer id;
+    private final Integer id;
     private Role role;
 
     public User(Integer id, String name, Role role) {
@@ -18,8 +18,9 @@ public class User {
     }
 
     public User(String name, Role role) {
-        this.id = null;
+        this.id = counter;
         this.name = name;
+        counter++;
         this.role = role;
     }
 
