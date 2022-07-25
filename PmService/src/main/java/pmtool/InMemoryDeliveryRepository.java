@@ -50,8 +50,8 @@ public class InMemoryDeliveryRepository implements JpaRepository<Delivery, Integ
     }
 
     @Override
-    public void deleteById(Integer integer) {
-        db.remove(integer.intValue());
+    public void deleteById(Integer id) {
+        db.removeIf((delivery)->delivery.getId()==id);
 
     }
 
@@ -61,9 +61,9 @@ public class InMemoryDeliveryRepository implements JpaRepository<Delivery, Integ
     }
 
     @Override
-    public void deleteAllById(Iterable<? extends Integer> integers) {
-        for (Integer i : integers) {
-            db.remove(i.intValue());
+    public void deleteAllById(Iterable<? extends Integer> id) {
+        for (Integer i : id) {
+            db.removeIf((delivery)->delivery.getId()==i);
         }
     }
 
