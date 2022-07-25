@@ -152,4 +152,48 @@ class PmServiceTest {
     void getAllTasksByProject() {
 //        assertEquals(6, pmService.getAllTasksByProject(projectRepository.getOne(1)).size());
     }
+
+    @Test
+    void editProjectName() {
+    }
+
+    @Test
+    void editProjectStatus() {
+    }
+
+    @Test
+    void editProjectStartTime() {
+    }
+
+    @Test
+    void editProjectClientName() {
+    }
+
+    @Test
+    void editProjectBackOfficeName() {
+    }
+
+    @Test
+    void editMilestoneName() {
+    }
+
+    @Test
+    void editMilestoneDueDate() {
+    }
+
+    @Test
+    void editMilestoneRequiredTime() {
+    }
+
+    @Test
+    void editDeliveryName() {
+    }
+
+    @Test
+    void editTaskName() {
+    }
+
+    @Test
+    void editTaskRequiredTime() {
+    }
 }
