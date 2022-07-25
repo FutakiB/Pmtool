@@ -17,9 +17,9 @@ class InMemoryUserRepositoryTest {
     @BeforeAll
     static void BeforeAll(){
         for (int i = 0; i < 5; i++) {
-            users.add(new User("Name" + 3 * i, User.role.Analyst));
-            users.add(new User("Name" + 3 * i + 1, User.role.Dev));
-            users.add(new User("Name" + 3 * i + 2, User.role.Manager));
+            users.add(new User("Name" + 3 * i, User.Role.ANALYST));
+            users.add(new User("Name" + 3 * i + 1, User.Role.DEV));
+            users.add(new User("Name" + 3 * i + 2, User.Role.MANAGER));
         }
     }
     @BeforeEach
