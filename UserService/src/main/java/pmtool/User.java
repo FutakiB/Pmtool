@@ -19,6 +19,13 @@ public class User {
         this.role = role;
     }
 
+    public User(Integer id, String name, User.role role) {
+        this.name = name;
+        this.id = id;
+        counter++;
+        this.role = role;
+    }
+
 
     public Integer getId() {
         return id;
