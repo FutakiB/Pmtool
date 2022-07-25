@@ -112,7 +112,7 @@ public class InMemoryMilestoneRepository implements JpaRepository<Milestone, Int
 
     @Override
     public boolean existsById(Integer id) {
-        return db.stream().filter((milestone)->milestone.getId()==id).count()>0;
+        return db.stream().anyMatch((milestone) -> milestone.getId() == id);
     }
 
     @Override
