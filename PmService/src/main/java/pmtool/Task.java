@@ -4,7 +4,6 @@ import java.time.Duration;
 import java.util.List;
 
 public class Task {
-
     private Integer id;
     private Integer projectId;
     private Integer milestoneId;
@@ -13,6 +12,7 @@ public class Task {
     private Duration requiredTime;
     private List<Task> subtasks;
     private List<User> assignedUsers;
+    private TaskStatus status;
 
     public Task(Integer id, Integer projectId, Integer milestoneId, Integer parentTaskId, String name, Duration requiredTime) {
         this.id = id;
@@ -29,7 +29,6 @@ public class Task {
         this.requiredTime = requiredTime;
     }
 
-
     public Task(String name, Duration requiredTime) {
         this.name = name;
         this.requiredTime = requiredTime;
@@ -44,6 +43,14 @@ public class Task {
         this.requiredTime = Duration.ZERO;
 //        this.subtasks = new ArrayList<>();
 //        this.assignedUsers = new ArrayList<>();
+    }
+
+    public TaskStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(TaskStatus status) {
+        this.status = status;
     }
 
     public int getProjectId() {

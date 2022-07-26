@@ -13,6 +13,7 @@ public class Milestone {
     private Duration requiredTime;
     private List<Task> tasks;
     private List<Delivery> deliveries;
+    private MilestoneStatus status;
 
     public Milestone(Integer id, Integer projectId, String name, LocalDateTime dueDate, Duration requiredTime) {
         this.id = id;
@@ -37,6 +38,14 @@ public class Milestone {
         this.requiredTime = Duration.ZERO;
 //        this.tasks = new ArrayList<>();
 //        this.deliveries = new ArrayList<>();
+    }
+
+    public MilestoneStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(MilestoneStatus status) {
+        this.status = status;
     }
 
     public int getProjectId() {

@@ -8,6 +8,8 @@ public class Delivery {
     private String name;
     private DeliveryType type;
 
+    private DeliveryStatus status;
+
     public Delivery(String name, DeliveryType type, Integer milestoneID) {
         this.id = counter;
         counter++;
@@ -29,6 +31,14 @@ public class Delivery {
         this.milestoneId = null;
         this.name = "New delivery";
         this.type = DeliveryType.ARTIFACT;
+    }
+
+    public DeliveryStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(DeliveryStatus status) {
+        this.status = status;
     }
 
     public int getId() {
