@@ -29,33 +29,6 @@ class PmServiceTest {
         pmService = new PmService(milestoneRepository, deliveryRepository, taskRepository, projectRepository);
     }
 
-
-//    @BeforeEach
-//    void setUp() {
-//        projectRepository.deleteAll();
-//        milestoneRepository.deleteAll();
-//        deliveryRepository.deleteAll();
-//        taskRepository.deleteAll();
-//
-//        projectRepository.save(new Project(1, "Project 1", ProjectStatus.IN_PROGRESS, LocalDateTime.now(), "Client 1", "BackOffice 1"));
-//        milestoneRepository.save(new Milestone(1, 1, "Milestone 1", LocalDateTime.now(), Duration.ZERO));
-//        deliveryRepository.save(new Delivery(1, "Delivery 1", DeliveryType.ARTIFACT, 1));
-//        taskRepository.save(new Task(1, 1, 1, null, "Task 1", Duration.ZERO));
-//        taskRepository.save(new Task(2, 1, 1, 1, "SubTask 1", Duration.ZERO));
-//
-//        projectRepository.save(new Project(2, "Project 2", ProjectStatus.IN_PROGRESS, LocalDateTime.now(), "Client 2", "BackOffice 2"));
-//        milestoneRepository.save(new Milestone(2, 2, "Milestone 2", LocalDateTime.now(), Duration.ZERO));
-//        deliveryRepository.save(new Delivery(2, "Delivery 2", DeliveryType.ARTIFACT, 2));
-//        taskRepository.save(new Task(3, 2, 2, null, "Task 2", Duration.ZERO));
-//        taskRepository.save(new Task(4, 2, 2, 3, "SubTask 2", Duration.ZERO));
-//
-//        projectRepository.save(new Project(3, "Project 3", ProjectStatus.IN_PROGRESS, LocalDateTime.now(), "Client 3", "BackOffice 3"));
-//        milestoneRepository.save(new Milestone(3, 3, "Milestone 3", LocalDateTime.now(), Duration.ZERO));
-//        deliveryRepository.save(new Delivery(3, "Delivery 3", DeliveryType.ARTIFACT, 3));
-//        taskRepository.save(new Task(5, 3, 3, null, "Task 3", Duration.ZERO));
-//        taskRepository.save(new Task(6, 3, 3, 5, "SubTask 3", Duration.ZERO));
-//    }
-
     @Test
     void addProject() {
         Project project = new Project(4, "Project 4", ProjectStatus.IN_PROGRESS, LocalDateTime.now(), "Client 4", "BackOffice 4");
@@ -192,9 +165,7 @@ class PmServiceTest {
     void editProjectNameProjectIsNotExists() {
         Project project = new Project(1, "Project 1", ProjectStatus.IN_PROGRESS, LocalDateTime.now(), "Client 1", "BackOffice 1");
         when(projectRepository.existsById(project.getId())).thenReturn(false);
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            pmService.editProjectName(project, "Project 1 edited");
-        });
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> pmService.editProjectName(project, "Project 1 edited"));
         assertEquals("Project does not exist", exception.getMessage());
         verify(projectRepository, times(0)).save(project);
     }
@@ -203,9 +174,7 @@ class PmServiceTest {
     void editProjectNameNameIsEmpty() {
         Project project = new Project(1, "Project 1", ProjectStatus.IN_PROGRESS, LocalDateTime.now(), "Client 1", "BackOffice 1");
         when(projectRepository.existsById(project.getId())).thenReturn(true);
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            pmService.editProjectName(project, "");
-        });
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> pmService.editProjectName(project, ""));
         assertEquals("Project name cannot be empty", exception.getMessage());
         verify(projectRepository, times(0)).save(project);
     }
@@ -214,9 +183,7 @@ class PmServiceTest {
     void editProjectNameNameTooLong() {
         Project project = new Project(1, "Project 1", ProjectStatus.IN_PROGRESS, LocalDateTime.now(), "Client 1", "BackOffice 1");
         when(projectRepository.existsById(project.getId())).thenReturn(true);
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            pmService.editProjectName(project, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        });
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> pmService.editProjectName(project, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"));
         assertEquals("Project name cannot be longer than 50 characters", exception.getMessage());
         verify(projectRepository, times(0)).save(project);
     }
@@ -233,9 +200,7 @@ class PmServiceTest {
     void editProjectStatusProjectNotExists() {
         Project project = new Project(1, "Project 1", ProjectStatus.IN_PROGRESS, LocalDateTime.now(), "Client 1", "BackOffice 1");
         when(projectRepository.existsById(project.getId())).thenReturn(false);
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            pmService.editProjectStatus(project, ProjectStatus.COMPLETED);
-        });
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> pmService.editProjectStatus(project, ProjectStatus.COMPLETED));
         assertEquals("Project does not exist", exception.getMessage());
         verify(projectRepository, times(0)).save(project);
     }
@@ -252,9 +217,7 @@ class PmServiceTest {
     void editProjectStartTimeProjectNotExists() {
         Project project = new Project(1, "Project 1", ProjectStatus.IN_PROGRESS, LocalDateTime.now(), "Client 1", "BackOffice 1");
         when(projectRepository.existsById(project.getId())).thenReturn(false);
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            pmService.editProjectStartTime(project, LocalDateTime.now());
-        });
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> pmService.editProjectStartTime(project, LocalDateTime.now()));
         assertEquals("Project does not exist", exception.getMessage());
         verify(projectRepository, times(0)).save(project);
     }
@@ -271,9 +234,7 @@ class PmServiceTest {
     void editProjectClientProjectNotExists() {
         Project project = new Project(1, "Project 1", ProjectStatus.IN_PROGRESS, LocalDateTime.now(), "Client 1", "BackOffice 1");
         when(projectRepository.existsById(project.getId())).thenReturn(false);
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            pmService.editProjectClientName(project, "Client 1 edited");
-        });
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> pmService.editProjectClientName(project, "Client 1 edited"));
         assertEquals("Project does not exist", exception.getMessage());
         verify(projectRepository, times(0)).save(project);
     }
@@ -282,9 +243,7 @@ class PmServiceTest {
     void editProjectClientNameIsEmpty() {
         Project project = new Project(1, "Project 1", ProjectStatus.IN_PROGRESS, LocalDateTime.now(), "Client 1", "BackOffice 1");
         when(projectRepository.existsById(project.getId())).thenReturn(true);
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            pmService.editProjectClientName(project, "");
-        });
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> pmService.editProjectClientName(project, ""));
         assertEquals("Client name cannot be empty", exception.getMessage());
         verify(projectRepository, times(0)).save(project);
     }
@@ -293,9 +252,7 @@ class PmServiceTest {
     void editProjectClientNameTooLong() {
         Project project = new Project(1, "Project 1", ProjectStatus.IN_PROGRESS, LocalDateTime.now(), "Client 1", "BackOffice 1");
         when(projectRepository.existsById(project.getId())).thenReturn(true);
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            pmService.editProjectClientName(project, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        });
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> pmService.editProjectClientName(project, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"));
         assertEquals("Client name cannot be longer than 50 characters", exception.getMessage());
         verify(projectRepository, times(0)).save(project);
     }
@@ -312,9 +269,7 @@ class PmServiceTest {
     void editProjectBackOfficeProjectNotExists() {
         Project project = new Project(1, "Project 1", ProjectStatus.IN_PROGRESS, LocalDateTime.now(), "Client 1", "BackOffice 1");
         when(projectRepository.existsById(project.getId())).thenReturn(false);
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            pmService.editProjectBackOfficeName(project, "BackOffice 1 edited");
-        });
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> pmService.editProjectBackOfficeName(project, "BackOffice 1 edited"));
         assertEquals("Project does not exist", exception.getMessage());
         verify(projectRepository, times(0)).save(project);
     }
@@ -323,9 +278,7 @@ class PmServiceTest {
     void editProjectBackOfficeNameIsEmpty() {
         Project project = new Project(1, "Project 1", ProjectStatus.IN_PROGRESS, LocalDateTime.now(), "Client 1", "BackOffice 1");
         when(projectRepository.existsById(project.getId())).thenReturn(true);
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            pmService.editProjectBackOfficeName(project, "");
-        });
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> pmService.editProjectBackOfficeName(project, ""));
         assertEquals("Back office name cannot be empty", exception.getMessage());
         verify(projectRepository, times(0)).save(project);
     }
@@ -334,9 +287,7 @@ class PmServiceTest {
     void editProjectBackOfficeNameTooLong() {
         Project project = new Project(1, "Project 1", ProjectStatus.IN_PROGRESS, LocalDateTime.now(), "Client 1", "BackOffice 1");
         when(projectRepository.existsById(project.getId())).thenReturn(true);
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            pmService.editProjectBackOfficeName(project, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        });
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> pmService.editProjectBackOfficeName(project, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"));
         assertEquals("Back office name cannot be longer than 50 characters", exception.getMessage());
         verify(projectRepository, times(0)).save(project);
     }
@@ -353,9 +304,7 @@ class PmServiceTest {
     void editMilestoneNameNotExist() {
         Milestone milestone = new Milestone(1, 1, "Milestone 1", LocalDateTime.now(), Duration.ZERO);
         when(milestoneRepository.existsById(milestone.getId())).thenReturn(false);
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            pmService.editMilestoneName(milestone, "Milestone 1 edited");
-        });
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> pmService.editMilestoneName(milestone, "Milestone 1 edited"));
         assertEquals("Milestone does not exist", exception.getMessage());
         verify(milestoneRepository, times(0)).save(milestone);
     }
@@ -364,9 +313,7 @@ class PmServiceTest {
     void editMilestoneNameIsEmpty() {
         Milestone milestone = new Milestone(1, 1, "Milestone 1", LocalDateTime.now(), Duration.ZERO);
         when(milestoneRepository.existsById(milestone.getId())).thenReturn(true);
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            pmService.editMilestoneName(milestone, "");
-        });
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> pmService.editMilestoneName(milestone, ""));
         assertEquals("Milestone name cannot be empty", exception.getMessage());
         verify(milestoneRepository, times(0)).save(milestone);
     }
@@ -375,9 +322,7 @@ class PmServiceTest {
     void editMilestoneNameTooLong() {
         Milestone milestone = new Milestone(1, 1, "Milestone 1", LocalDateTime.now(), Duration.ZERO);
         when(milestoneRepository.existsById(milestone.getId())).thenReturn(true);
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            pmService.editMilestoneName(milestone, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        });
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> pmService.editMilestoneName(milestone, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"));
         assertEquals("Milestone name cannot be longer than 50 characters", exception.getMessage());
         verify(milestoneRepository, times(0)).save(milestone);
     }
@@ -394,9 +339,7 @@ class PmServiceTest {
     void editMilestoneDueDateNotExists() {
         Milestone milestone = new Milestone(1, 1, "Milestone 1", LocalDateTime.now(), Duration.ZERO);
         when(milestoneRepository.existsById(milestone.getId())).thenReturn(false);
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            pmService.editMilestoneDueDate(milestone, LocalDateTime.now().plusDays(1));
-        });
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> pmService.editMilestoneDueDate(milestone, LocalDateTime.now().plusDays(1)));
         assertEquals("Milestone does not exist", exception.getMessage());
         verify(milestoneRepository, times(0)).save(milestone);
     }
@@ -413,9 +356,7 @@ class PmServiceTest {
     void editMilestoneRequiredTimeNotExists() {
         Milestone milestone = new Milestone(1, 1, "Milestone 1", LocalDateTime.now(), Duration.ZERO);
         when(milestoneRepository.existsById(milestone.getId())).thenReturn(false);
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            pmService.editMilestoneRequiredTime(milestone, Duration.ofHours(1));
-        });
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> pmService.editMilestoneRequiredTime(milestone, Duration.ofHours(1)));
         assertEquals("Milestone does not exist", exception.getMessage());
         verify(milestoneRepository, times(0)).save(milestone);
     }
@@ -424,9 +365,7 @@ class PmServiceTest {
     void editMilestoneRequiredTimeIsNegative() {
         Milestone milestone = new Milestone(1, 1, "Milestone 1", LocalDateTime.now(), Duration.ZERO);
         when(milestoneRepository.existsById(milestone.getId())).thenReturn(true);
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            pmService.editMilestoneRequiredTime(milestone, Duration.ofHours(-1));
-        });
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> pmService.editMilestoneRequiredTime(milestone, Duration.ofHours(-1)));
         assertEquals("Required time cannot be negative", exception.getMessage());
         verify(milestoneRepository, times(0)).save(milestone);
     }
@@ -443,9 +382,7 @@ class PmServiceTest {
     void editDeliveryNameNotExists() {
         Delivery delivery = new Delivery(1, 1, "Delivery 1", DeliveryType.ARTIFACT);
         when(deliveryRepository.existsById(delivery.getId())).thenReturn(false);
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            pmService.editDeliveryName(delivery, "Delivery 1 edited");
-        });
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> pmService.editDeliveryName(delivery, "Delivery 1 edited"));
         assertEquals("Delivery does not exist", exception.getMessage());
         verify(deliveryRepository, times(0)).save(delivery);
     }
@@ -454,9 +391,7 @@ class PmServiceTest {
     void editDeliveryNameIsEmpty() {
         Delivery delivery = new Delivery(1, 1, "Delivery 1", DeliveryType.ARTIFACT);
         when(deliveryRepository.existsById(delivery.getId())).thenReturn(true);
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            pmService.editDeliveryName(delivery, "");
-        });
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> pmService.editDeliveryName(delivery, ""));
         assertEquals("Delivery name cannot be empty", exception.getMessage());
         verify(deliveryRepository, times(0)).save(delivery);
     }
@@ -465,9 +400,7 @@ class PmServiceTest {
     void editDeliveryNameTooLong() {
         Delivery delivery = new Delivery(1, 1, "Delivery 1", DeliveryType.ARTIFACT);
         when(deliveryRepository.existsById(delivery.getId())).thenReturn(true);
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            pmService.editDeliveryName(delivery, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        });
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> pmService.editDeliveryName(delivery, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"));
         assertEquals("Delivery name cannot be longer than 50 characters", exception.getMessage());
         verify(deliveryRepository, times(0)).save(delivery);
     }
@@ -484,9 +417,7 @@ class PmServiceTest {
     void editTaskNameNotExists() {
         Task task = new Task(1, 1, 1, null, "Task 1", Duration.ZERO);
         when(taskRepository.existsById(task.getId())).thenReturn(false);
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            pmService.editTaskName(task, "Task 1 edited");
-        });
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> pmService.editTaskName(task, "Task 1 edited"));
         assertEquals("Task does not exist", exception.getMessage());
         verify(taskRepository, times(0)).save(task);
     }
@@ -495,9 +426,7 @@ class PmServiceTest {
     void editTaskNameIsEmpty() {
         Task task = new Task(1, 1, 1, null, "Task 1", Duration.ZERO);
         when(taskRepository.existsById(task.getId())).thenReturn(true);
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            pmService.editTaskName(task, "");
-        });
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> pmService.editTaskName(task, ""));
         assertEquals("Task name cannot be empty", exception.getMessage());
         verify(taskRepository, times(0)).save(task);
     }
@@ -506,9 +435,7 @@ class PmServiceTest {
     void editTaskNameTooLong() {
         Task task = new Task(1, 1, 1, null, "Task 1", Duration.ZERO);
         when(taskRepository.existsById(task.getId())).thenReturn(true);
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            pmService.editTaskName(task, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        });
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> pmService.editTaskName(task, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"));
         assertEquals("Task name cannot be longer than 50 characters", exception.getMessage());
         verify(taskRepository, times(0)).save(task);
     }
@@ -525,9 +452,7 @@ class PmServiceTest {
     void editTaskRequiredTimeNotExists() {
         Task task = new Task(1, 1, 1, null, "Task 1", Duration.ZERO);
         when(taskRepository.existsById(task.getId())).thenReturn(false);
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            pmService.editTaskRequiredTime(task, Duration.ofHours(1));
-        });
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> pmService.editTaskRequiredTime(task, Duration.ofHours(1)));
         assertEquals("Task does not exist", exception.getMessage());
         verify(taskRepository, times(0)).save(task);
     }
@@ -536,9 +461,7 @@ class PmServiceTest {
     void editTaskRequiredTimeIsNegative() {
         Task task = new Task(1, 1, 1, null, "Task 1", Duration.ZERO);
         when(taskRepository.existsById(task.getId())).thenReturn(true);
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            pmService.editTaskRequiredTime(task, Duration.ofHours(-1));
-        });
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> pmService.editTaskRequiredTime(task, Duration.ofHours(-1)));
         assertEquals("Required time cannot be negative", exception.getMessage());
         verify(taskRepository, times(0)).save(task);
     }
