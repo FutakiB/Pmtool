@@ -101,7 +101,7 @@ public class Task {
         this.subtasks = subtasks;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -133,7 +133,7 @@ public class Task {
 //                " " + assignedUsers.size() + " assigned users";
 //    }
 
-    public int getParentTaskId() {
+    public Integer getParentTaskId() {
         return parentTaskId;
     }
 

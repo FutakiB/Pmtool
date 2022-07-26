@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.mockito.Mockito.*;
 
@@ -95,20 +97,49 @@ class PmServiceTest {
 
     @Test
     void removeProject() {
-        Project project = new Project();
+        Project p1 = new Project(1, "Project", ProjectStatus.IN_PROGRESS, LocalDateTime.now(), "Client1", "Back office1");
+        Milestone m1 = new Milestone(1, "Milestone1", LocalDateTime.now(), Duration.ofDays(30));
+        m1.setProjectId(1);
+        Milestone m2 = new Milestone(2, "Milestone2", LocalDateTime.now(), Duration.ofDays(30));
+        m2.setProjectId(2);
+        List<Milestone> milestones = new ArrayList<>();
+        milestones.add(m1);
+        milestones.add(m2);
+        when(milestoneRepository.findAll()).thenReturn(milestones);
 
-        pmService.removeProject(project);
+        pmService.removeProject(p1);
 
-        verify(projectRepository, times(1)).delete(project);
+        //verify(pmService,times(1)).removeMilestone(any(Milestone.class));
+        verify(milestoneRepository, times(1)).delete(any(Milestone.class));
+        verify(projectRepository, times(1)).delete(p1);
     }
 
     @Test
     void removeMilestone() {
-        Milestone milestone = new Milestone();
+        Milestone m1 = new Milestone(1, "Milestone1", LocalDateTime.now(), Duration.ofDays(30));
 
-        pmService.removeMilestone(milestone);
+        Task t1 = new Task(1, "Task1", Duration.ofMinutes(30));
+        Task t2 = new Task(2, "Task2", Duration.ofMinutes(30));
+        t2.setMilestoneId(2);
+        List<Task> tasks = new ArrayList<>();
+        tasks.add(t1);
+        tasks.add(t2);
+        when(taskRepository.findAll()).thenReturn(tasks);
 
-        verify(milestoneRepository, times(1)).delete(milestone);
+        Delivery d1 = new Delivery(1, "Delivery1", DeliveryType.ARTIFACT, 2);
+        t1.setMilestoneId(1);
+        Delivery d2 = new Delivery(2, "Delivery2", DeliveryType.DOCUMENT, 1);
+        t2.setMilestoneId(2);
+        List<Delivery> deliveries = new ArrayList<>();
+        deliveries.add(d1);
+        deliveries.add(d2);
+        when(deliveryRepository.findAll()).thenReturn(deliveries);
+
+        pmService.removeMilestone(m1);
+
+        verify(taskRepository, times(1)).delete(any(Task.class));
+        verify(deliveryRepository, times(1)).delete(any(Delivery.class));
+        verify(milestoneRepository, times(1)).delete(m1);
     }
 
     @Test
@@ -121,12 +152,25 @@ class PmServiceTest {
     }
 
     @Test
-    void removeTask() {
-        Task task = new Task();
+    void removeTask_calls_delete_on_all_subtasks() {
+        Task t1 = new Task();
+        t1.setId(1);
+        Task t2 = new Task();
+        t2.setId(2);
+        Task t3 = new Task();
+        t3.setId(3);
+        t3.setParentTaskId(1);
+        List<Task> tasks = new ArrayList<>();
+        tasks.add(t1);
+        tasks.add(t2);
+        tasks.add(t3);
+        when(taskRepository.findAll()).thenReturn(tasks);
 
-        pmService.removeTask(task);
+        pmService.removeTask(t1);
 
-        verify(taskRepository, times(1)).delete(task);
+        verify(taskRepository, times(1)).delete(t1);
+        verify(taskRepository, times(0)).delete(t2);
+        verify(taskRepository, times(1)).delete(t3);
     }
 
     @Test
