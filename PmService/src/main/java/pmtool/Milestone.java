@@ -30,6 +30,12 @@ public class Milestone {
         this.requiredTime = requiredTime;
     }
 
+    public Milestone(String name, LocalDateTime dueDate, Duration requiredTime) {
+        this.name = name;
+        this.dueDate = dueDate;
+        this.requiredTime = requiredTime;
+    }
+
     public Milestone() {
         this.id = null;
         this.projectId = null;
@@ -72,11 +78,6 @@ public class Milestone {
         this.deliveries = deliveries;
     }
 
-    public Milestone(String name, LocalDateTime dueDate, Duration requiredTime) {
-        this.name = name;
-        this.dueDate = dueDate;
-        this.requiredTime = requiredTime;
-    }
 
     public void addTask(Task task) {
 //        tasks.add(task);

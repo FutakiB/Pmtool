@@ -248,12 +248,12 @@ public class PmService implements ProjectManagement {
     @Override
     public void editMilestoneDueDate(Milestone milestone, LocalDateTime dueDate) throws IllegalArgumentException {
         if (milestoneRepository.existsById(milestone.getId())) {
-            if (dueDate.isBefore(LocalDateTime.MIN)) {
-                throw new IllegalArgumentException("Due date cannot be before 1970-01-01T00:00:00");
-            }
-            if (dueDate.isAfter(LocalDateTime.MAX)) {
-                throw new IllegalArgumentException("Due date cannot be after 9999-12-31T23:59:59");
-            }
+//            if (dueDate.isBefore(LocalDateTime.MIN)) {
+//                throw new IllegalArgumentException("Due date cannot be before 1970-01-01T00:00:00");
+//            }
+//            if (dueDate.isAfter(LocalDateTime.MAX)) {
+//                throw new IllegalArgumentException("Due date cannot be after 9999-12-31T23:59:59");
+//            }
             milestone.setDueDate(dueDate);
             milestoneRepository.save(milestone);
         } else {

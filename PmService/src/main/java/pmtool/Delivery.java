@@ -18,7 +18,7 @@ public class Delivery {
         this.milestoneId = milestoneID;
     }
 
-    public Delivery(Integer id, String name, DeliveryType type, Integer milestoneID) {
+    public Delivery(Integer id, Integer milestoneID, String name, DeliveryType type) {
         this.id = id;
         this.name = name;
         this.type = type;

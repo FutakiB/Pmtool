@@ -74,7 +74,7 @@ class PmServiceTest {
     @Test
     void addDelivery() {
         Milestone milestone = new Milestone(4, 4, "Milestone 4", LocalDateTime.now(), Duration.ZERO);
-        Delivery delivery = new Delivery(4, "Delivery 4", DeliveryType.ARTIFACT, 4);
+        Delivery delivery = new Delivery(4, 4, "Delivery 4", DeliveryType.ARTIFACT);
         pmService.addDelivery(milestone, delivery);
         verify(deliveryRepository, times(1)).save(delivery);
     }
@@ -195,7 +195,7 @@ class PmServiceTest {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             pmService.editProjectName(project, "Project 1 edited");
         });
-        assertEquals("Project with id 1 does not exist", exception.getMessage());
+        assertEquals("Project does not exist", exception.getMessage());
         verify(projectRepository, times(0)).save(project);
     }
 
@@ -342,27 +342,204 @@ class PmServiceTest {
     }
 
     @Test
-    void editMilestoneName() {
-
+    void editMilestoneNameSuccessful() {
+        Milestone milestone = new Milestone(1, 1, "Milestone 1", LocalDateTime.now(), Duration.ZERO);
+        when(milestoneRepository.existsById(milestone.getId())).thenReturn(true);
+        pmService.editMilestoneName(milestone, "Milestone 1 edited");
+        verify(milestoneRepository, times(1)).save(milestone);
     }
 
     @Test
-    void editMilestoneDueDate() {
+    void editMilestoneNameNotExist() {
+        Milestone milestone = new Milestone(1, 1, "Milestone 1", LocalDateTime.now(), Duration.ZERO);
+        when(milestoneRepository.existsById(milestone.getId())).thenReturn(false);
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            pmService.editMilestoneName(milestone, "Milestone 1 edited");
+        });
+        assertEquals("Milestone does not exist", exception.getMessage());
+        verify(milestoneRepository, times(0)).save(milestone);
     }
 
     @Test
-    void editMilestoneRequiredTime() {
+    void editMilestoneNameIsEmpty() {
+        Milestone milestone = new Milestone(1, 1, "Milestone 1", LocalDateTime.now(), Duration.ZERO);
+        when(milestoneRepository.existsById(milestone.getId())).thenReturn(true);
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            pmService.editMilestoneName(milestone, "");
+        });
+        assertEquals("Milestone name cannot be empty", exception.getMessage());
+        verify(milestoneRepository, times(0)).save(milestone);
     }
 
     @Test
-    void editDeliveryName() {
+    void editMilestoneNameTooLong() {
+        Milestone milestone = new Milestone(1, 1, "Milestone 1", LocalDateTime.now(), Duration.ZERO);
+        when(milestoneRepository.existsById(milestone.getId())).thenReturn(true);
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            pmService.editMilestoneName(milestone, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        });
+        assertEquals("Milestone name cannot be longer than 50 characters", exception.getMessage());
+        verify(milestoneRepository, times(0)).save(milestone);
     }
 
     @Test
-    void editTaskName() {
+    void editMilestoneDueDateSuccessful() {
+        Milestone milestone = new Milestone(1, 1, "Milestone 1", LocalDateTime.now(), Duration.ZERO);
+        when(milestoneRepository.existsById(milestone.getId())).thenReturn(true);
+        pmService.editMilestoneDueDate(milestone, LocalDateTime.now().plusDays(1));
+        verify(milestoneRepository, times(1)).save(milestone);
     }
 
     @Test
-    void editTaskRequiredTime() {
+    void editMilestoneDueDateNotExists() {
+        Milestone milestone = new Milestone(1, 1, "Milestone 1", LocalDateTime.now(), Duration.ZERO);
+        when(milestoneRepository.existsById(milestone.getId())).thenReturn(false);
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            pmService.editMilestoneDueDate(milestone, LocalDateTime.now().plusDays(1));
+        });
+        assertEquals("Milestone does not exist", exception.getMessage());
+        verify(milestoneRepository, times(0)).save(milestone);
+    }
+
+    @Test
+    void editMilestoneRequiredTimeSuccessful() {
+        Milestone milestone = new Milestone(1, 1, "Milestone 1", LocalDateTime.now(), Duration.ZERO);
+        when(milestoneRepository.existsById(milestone.getId())).thenReturn(true);
+        pmService.editMilestoneRequiredTime(milestone, Duration.ofHours(1));
+        verify(milestoneRepository, times(1)).save(milestone);
+    }
+
+    @Test
+    void editMilestoneRequiredTimeNotExists() {
+        Milestone milestone = new Milestone(1, 1, "Milestone 1", LocalDateTime.now(), Duration.ZERO);
+        when(milestoneRepository.existsById(milestone.getId())).thenReturn(false);
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            pmService.editMilestoneRequiredTime(milestone, Duration.ofHours(1));
+        });
+        assertEquals("Milestone does not exist", exception.getMessage());
+        verify(milestoneRepository, times(0)).save(milestone);
+    }
+
+    @Test
+    void editMilestoneRequiredTimeIsNegative() {
+        Milestone milestone = new Milestone(1, 1, "Milestone 1", LocalDateTime.now(), Duration.ZERO);
+        when(milestoneRepository.existsById(milestone.getId())).thenReturn(true);
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            pmService.editMilestoneRequiredTime(milestone, Duration.ofHours(-1));
+        });
+        assertEquals("Required time cannot be negative", exception.getMessage());
+        verify(milestoneRepository, times(0)).save(milestone);
+    }
+
+    @Test
+    void editDeliveryNameSuccessful() {
+        Delivery delivery = new Delivery(1, 1, "Delivery 1", DeliveryType.ARTIFACT);
+        when(deliveryRepository.existsById(delivery.getId())).thenReturn(true);
+        pmService.editDeliveryName(delivery, "Delivery 1 edited");
+        verify(deliveryRepository, times(1)).save(delivery);
+    }
+
+    @Test
+    void editDeliveryNameNotExists() {
+        Delivery delivery = new Delivery(1, 1, "Delivery 1", DeliveryType.ARTIFACT);
+        when(deliveryRepository.existsById(delivery.getId())).thenReturn(false);
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            pmService.editDeliveryName(delivery, "Delivery 1 edited");
+        });
+        assertEquals("Delivery does not exist", exception.getMessage());
+        verify(deliveryRepository, times(0)).save(delivery);
+    }
+
+    @Test
+    void editDeliveryNameIsEmpty() {
+        Delivery delivery = new Delivery(1, 1, "Delivery 1", DeliveryType.ARTIFACT);
+        when(deliveryRepository.existsById(delivery.getId())).thenReturn(true);
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            pmService.editDeliveryName(delivery, "");
+        });
+        assertEquals("Delivery name cannot be empty", exception.getMessage());
+        verify(deliveryRepository, times(0)).save(delivery);
+    }
+
+    @Test
+    void editDeliveryNameTooLong() {
+        Delivery delivery = new Delivery(1, 1, "Delivery 1", DeliveryType.ARTIFACT);
+        when(deliveryRepository.existsById(delivery.getId())).thenReturn(true);
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            pmService.editDeliveryName(delivery, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        });
+        assertEquals("Delivery name cannot be longer than 50 characters", exception.getMessage());
+        verify(deliveryRepository, times(0)).save(delivery);
+    }
+
+    @Test
+    void editTaskNameSuccessful() {
+        Task task = new Task(1, 1, 1, null, "Task 1", Duration.ZERO);
+        when(taskRepository.existsById(task.getId())).thenReturn(true);
+        pmService.editTaskName(task, "Task 1 edited");
+        verify(taskRepository, times(1)).save(task);
+    }
+
+    @Test
+    void editTaskNameNotExists() {
+        Task task = new Task(1, 1, 1, null, "Task 1", Duration.ZERO);
+        when(taskRepository.existsById(task.getId())).thenReturn(false);
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            pmService.editTaskName(task, "Task 1 edited");
+        });
+        assertEquals("Task does not exist", exception.getMessage());
+        verify(taskRepository, times(0)).save(task);
+    }
+
+    @Test
+    void editTaskNameIsEmpty() {
+        Task task = new Task(1, 1, 1, null, "Task 1", Duration.ZERO);
+        when(taskRepository.existsById(task.getId())).thenReturn(true);
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            pmService.editTaskName(task, "");
+        });
+        assertEquals("Task name cannot be empty", exception.getMessage());
+        verify(taskRepository, times(0)).save(task);
+    }
+
+    @Test
+    void editTaskNameTooLong() {
+        Task task = new Task(1, 1, 1, null, "Task 1", Duration.ZERO);
+        when(taskRepository.existsById(task.getId())).thenReturn(true);
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            pmService.editTaskName(task, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        });
+        assertEquals("Task name cannot be longer than 50 characters", exception.getMessage());
+        verify(taskRepository, times(0)).save(task);
+    }
+
+    @Test
+    void editTaskRequiredTimeSuccessful() {
+        Task task = new Task(1, 1, 1, null, "Task 1", Duration.ZERO);
+        when(taskRepository.existsById(task.getId())).thenReturn(true);
+        pmService.editTaskRequiredTime(task, Duration.ofHours(1));
+        verify(taskRepository, times(1)).save(task);
+    }
+
+    @Test
+    void editTaskRequiredTimeNotExists() {
+        Task task = new Task(1, 1, 1, null, "Task 1", Duration.ZERO);
+        when(taskRepository.existsById(task.getId())).thenReturn(false);
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            pmService.editTaskRequiredTime(task, Duration.ofHours(1));
+        });
+        assertEquals("Task does not exist", exception.getMessage());
+        verify(taskRepository, times(0)).save(task);
+    }
+
+    @Test
+    void editTaskRequiredTimeIsNegative() {
+        Task task = new Task(1, 1, 1, null, "Task 1", Duration.ZERO);
+        when(taskRepository.existsById(task.getId())).thenReturn(true);
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            pmService.editTaskRequiredTime(task, Duration.ofHours(-1));
+        });
+        assertEquals("Required time cannot be negative", exception.getMessage());
+        verify(taskRepository, times(0)).save(task);
     }
 }
