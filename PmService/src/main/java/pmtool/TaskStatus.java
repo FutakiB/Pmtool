@@ -1,8 +1,9 @@
 package pmtool;
 
 public enum TaskStatus {
+    TODO,
     IN_PROGRESS,
-    COMPLETED,
-    CANCELLED,
-    NOT_STARTED
+    IN_REVIEW,
+    DONE,
+
 }

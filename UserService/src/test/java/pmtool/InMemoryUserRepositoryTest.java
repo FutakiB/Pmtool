@@ -4,12 +4,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.beans.BeanProperty;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class InMemoryUserRepositoryTest {
     private InMemoryUserRepository userRepository = new InMemoryUserRepository();
@@ -23,16 +22,16 @@ class InMemoryUserRepositoryTest {
         }
     }
     @BeforeEach
-    void BeforeEach(){
-        userRepository.users.clear();
-        userRepository.users.addAll(users);
+    void BeforeEach() {
+        userRepository.db.clear();
+        userRepository.db.addAll(users);
     }
 
     @Test
     void testfindAll() {
         List<User> u = userRepository.findAll();
-        assertEquals(userRepository.users.size(), users.size());
-        assertTrue(userRepository.users.containsAll(u));
+        assertEquals(userRepository.db.size(), users.size());
+        assertTrue(userRepository.db.containsAll(u));
     }
 
     @Test
