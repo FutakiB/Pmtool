@@ -6,9 +6,9 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class InMemoryUserRepositoryTest {
     private InMemoryUserRepository userRepository = new InMemoryUserRepository();
@@ -42,64 +42,95 @@ class InMemoryUserRepositoryTest {
         integers.add(7);
         List<User> u = userRepository.findAllById(integers);
         assertEquals(u.size(),3);
-        assertEquals(u.get(0).getId(),3);
-        assertEquals(u.get(1).getId(),5);
-        assertEquals(u.get(2).getId(),7);
+
+        for (User us:u) {
+            assertTrue(integers.contains(us.getId()));
+        }
+
 
     }
 
     @Test
-    void testcount() {
+    void testCount() {
         assertEquals(userRepository.count(),users.size());
     }
 
     @Test
-    void testdeleteById() {
-
+    void testDeleteById() {
+        userRepository.deleteById(11);
+        assertFalse(userRepository.db.stream().anyMatch((user) -> user.getId().equals(11)));
     }
 
 
     @Test
-    void delete() {
+    void testDeleteEntity() {
+        User u = users.get(7);
+        userRepository.delete(u);
+        assertFalse(userRepository.db.contains(u));
     }
 
     @Test
-    void deleteAllById() {
-    }
+    void testDeleteAllById() {
+        ArrayList<Integer> id = new ArrayList<>();
+        id.add(7);
+        id.add(11);
+        id.add(12);
+        userRepository.deleteAllById(id);
+        assertFalse(userRepository.db.stream().anyMatch((user) -> user.getId().equals(11)));
+        assertFalse(userRepository.db.stream().anyMatch((user) -> user.getId().equals(12)));
+        assertFalse(userRepository.db.stream().anyMatch((user) -> user.getId().equals(7)));
 
-    @Test
-    void deleteAll() {
+
     }
 
     @Test
     void testDeleteAll() {
+        userRepository.deleteAll();
+        assertTrue(userRepository.db.isEmpty());
     }
 
     @Test
     void save() {
+        User u = new User("New User 007", User.Role.MANAGER);
+        User result = userRepository.save(u);
+        assertEquals(result,u);
+        assertTrue(userRepository.db.contains(u));
     }
 
     @Test
     void saveAll() {
+        User u1 = new User("New User 007", User.Role.MANAGER);
+        User u2 = new User("New User 123", User.Role.DEV);
+        User u3 = new User("New User ABC", User.Role.ANALYST);
+        List<User> u = new ArrayList<>();
+        u.add(u1);
+        u.add(u2);
+        u.add(u3);
+        List<User> result = userRepository.saveAll(u);
+        assertEquals(result,u);
+        assertTrue(userRepository.db.containsAll(u));
     }
 
     @Test
-    void findById() {
+    void testFindById() {
+        Optional<User> u = userRepository.findById(5);
+        assertNotEquals(u,Optional.empty());
+        Optional<User> uu = userRepository.findById(50);
+        assertEquals(uu,Optional.empty());
     }
 
     @Test
-    void existsById() {
+    void testExistsById() {
+        assertTrue(userRepository.existsById(7));
+        assertFalse(userRepository.existsById(70));
+
     }
 
     @Test
-    void flush() {
+    void testFlush() {
+        userRepository.flush();
+        assertTrue(userRepository.db.isEmpty());
     }
 
-    @Test
-    void getOne() {
-    }
 
-    @Test
-    void getById() {
-    }
 }

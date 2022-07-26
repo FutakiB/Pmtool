@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.FluentQuery;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -49,8 +50,8 @@ public class InMemoryUserRepository implements JpaRepository<User, Integer>{
     }
 
     @Override
-    public void deleteById(Integer integer) {
-        db.remove(integer);
+    public void deleteById(Integer id) {
+        db.removeIf((user)-> Objects.equals(user.getId(), id));
     }
 
     @Override
