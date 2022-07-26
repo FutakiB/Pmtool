@@ -6,8 +6,11 @@ import org.junit.jupiter.api.Test;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class PmServiceTest {
 
@@ -130,27 +133,77 @@ class PmServiceTest {
     }
 
     @Test
-    void getAllProjects() {
+    void testGetAllProjects() {
 //        assertEquals(3, pmService.getAllProjects().size());
+        List<Project> prj = new ArrayList();
+        for (int i = 0; i < 10; i++) {
+            Project p = new Project();
+            prj.add(p);
+        }
+        when(projectRepository.findAll()).thenReturn(prj);
+        List<Project> result = pmService.getAllProjects();
+        verify(projectRepository,times(1)).findAll();
+        assertEquals(prj,result);
+
     }
 
     @Test
-    void getAllMilestones() {
+    void testGetAllMilestones() {
 //        assertEquals(3, pmService.getAllMilestones().size());
+        List<Milestone> milestone = new ArrayList();
+        for (int i = 0; i < 10; i++) {
+            Milestone m = new Milestone();
+            milestone.add(m);
+        }
+        when(milestoneRepository.findAll()).thenReturn(milestone);
+        List<Milestone> result = pmService.getAllMilestones();
+        verify(milestoneRepository,times(1)).findAll();
+        assertEquals(milestone,result);
     }
 
     @Test
     void getAllDeliveries() {
 //        assertEquals(3, pmService.getAllDeliveries().size());
+        List<Delivery> deliveries = new ArrayList();
+        for (int i = 0; i < 10; i++) {
+            Delivery d = new Delivery();
+            deliveries.add(d);
+        }
+        when(deliveryRepository.findAll()).thenReturn(deliveries);
+        List<Delivery> result = pmService.getAllDeliveries();
+        verify(deliveryRepository,times(1)).findAll();
+        assertEquals(deliveries,result);
     }
 
     @Test
     void getAllTasks() {
 //        assertEquals(6, pmService.getAllTasks().size());
+        List<Task> task = new ArrayList();
+        for (int i = 0; i < 10; i++) {
+            Task t = new Task();
+            task.add(t);
+        }
+        when(taskRepository.findAll()).thenReturn(task);
+        List<Task> result = pmService.getAllTasks();
+        verify(taskRepository,times(1)).findAll();
+        assertEquals(task,result);
     }
 
     @Test
     void getAllSubTasks() {
+        List<Task> subtask = new ArrayList();
+        Task t = new Task(2, 3, 4, 5, "Parent Task", Duration.ZERO);
+
+        for (int i = 0; i < 10; i++) {
+            Task st = new Task();
+            //st.setParentTaskId(t.getId());
+            t.addSubtask(st);
+            subtask.add(st);
+        }
+        when(taskRepository.findAll()).thenReturn(subtask);
+        List<Task> result = pmService.getAllSubTasksByTask(t);
+        verify(taskRepository,times(1)).findAll();
+        assertEquals(subtask,result);
     }
 
     @Test
