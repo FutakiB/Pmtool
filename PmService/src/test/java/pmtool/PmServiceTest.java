@@ -97,26 +97,38 @@ class PmServiceTest {
 
     @Test
     void removeProject() {
-        pmService.removeProject(projectRepository.getOne(1));
-        verify(projectRepository, times(1)).delete(projectRepository.getOne(1));
+        Project project = new Project();
+
+        pmService.removeProject(project);
+
+        verify(projectRepository, times(1)).delete(project);
     }
 
     @Test
     void removeMilestone() {
-//        pmService.removeMilestone(milestoneRepository.getOne(1));
-//        assertEquals(2, milestoneRepository.findAll().size());
+        Milestone milestone = new Milestone();
+
+        pmService.removeMilestone(milestone);
+
+        verify(milestoneRepository, times(1)).delete(milestone);
     }
 
     @Test
     void removeDelivery() {
-//        pmService.removeDelivery(deliveryRepository.getOne(1));
-//        assertEquals(2, deliveryRepository.findAll().size());
+        Delivery delivery = new Delivery();
+
+        pmService.removeDelivery(delivery);
+
+        verify(deliveryRepository, times(1)).delete(delivery);
     }
 
     @Test
     void removeTask() {
-//        pmService.removeTask(taskRepository.getOne(1));
-//        assertEquals(5, taskRepository.findAll().size());
+        Task task = new Task();
+
+        pmService.removeTask(task);
+
+        verify(taskRepository, times(1)).delete(task);
     }
 
     @Test
