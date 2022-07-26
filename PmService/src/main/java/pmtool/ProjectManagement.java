@@ -53,17 +53,19 @@ public interface ProjectManagement {
 
     void editMilestoneName(Milestone milestone, String name);
 
-    //    void editMilestoneStatus(Milestone milestone, MilestoneStatus status);
     void editMilestoneDueDate(Milestone milestone, LocalDateTime dueDate);
 
     void editMilestoneRequiredTime(Milestone milestone, Duration requiredTime);
 
-    void editDeliveryName(Delivery delivery, String name);
-//    void editDeliveryStatus(Delivery delivery, DeliveryStatus status);
+    void editMilestoneStatus(Milestone milestone, MilestoneStatus status);
 
+    void editDeliveryName(Delivery delivery, String name);
+
+    void editDeliveryStatus(Delivery delivery, DeliveryStatus status);
 
     void editTaskName(Task task, String name);
 
-    //    void editTaskStatus(Task task, TaskStatus status);
     void editTaskRequiredTime(Task task, Duration requiredTime);
+
+    void editTaskStatus(Task task, TaskStatus status);
 }

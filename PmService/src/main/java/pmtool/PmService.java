@@ -260,6 +260,16 @@ public class PmService implements ProjectManagement {
         }
     }
 
+    @Override
+    public void editMilestoneStatus(Milestone milestone, MilestoneStatus status) {
+        milestone.setStatus(status);
+        if (milestoneRepository.existsById(milestone.getId())) {
+            milestoneRepository.save(milestone);
+        } else {
+            throw new IllegalArgumentException("Milestone does not exist");
+        }
+    }
+
 
     @Override
     public void editDeliveryName(Delivery delivery, String name) throws IllegalArgumentException {
@@ -271,6 +281,16 @@ public class PmService implements ProjectManagement {
                 throw new IllegalArgumentException("Delivery name cannot be longer than 50 characters");
             }
             delivery.setName(name);
+            deliveryRepository.save(delivery);
+        } else {
+            throw new IllegalArgumentException("Delivery does not exist");
+        }
+    }
+
+    @Override
+    public void editDeliveryStatus(Delivery delivery, DeliveryStatus status) {
+        delivery.setStatus(status);
+        if (deliveryRepository.existsById(delivery.getId())) {
             deliveryRepository.save(delivery);
         } else {
             throw new IllegalArgumentException("Delivery does not exist");
@@ -306,5 +326,13 @@ public class PmService implements ProjectManagement {
         }
     }
 
-
+    @Override
+    public void editTaskStatus(Task task, TaskStatus status) {
+        task.setStatus(status);
+        if (taskRepository.existsById(task.getId())) {
+            taskRepository.save(task);
+        } else {
+            throw new IllegalArgumentException("Task does not exist");
+        }
+    }
 }
