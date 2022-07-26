@@ -9,8 +9,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
 
 class PmServiceTest {
 
@@ -97,7 +97,7 @@ class PmServiceTest {
     }
 
     @Test
-    void removeProject() {
+    void removeProject_calls_delete_on_milestones() {
         Project p1 = new Project(1, "Project", ProjectStatus.IN_PROGRESS, LocalDateTime.now(), "Client1", "Back office1");
         Milestone m1 = new Milestone(1, "Milestone1", LocalDateTime.now(), Duration.ofDays(30));
         m1.setProjectId(1);
@@ -116,7 +116,7 @@ class PmServiceTest {
     }
 
     @Test
-    void removeMilestone() {
+    void removeMilestone_calls_delete_on_tasks_and_deliveries() {
         Milestone m1 = new Milestone(1, "Milestone1", LocalDateTime.now(), Duration.ofDays(30));
 
         Task t1 = new Task(1, "Task1", Duration.ofMinutes(30));
@@ -144,7 +144,7 @@ class PmServiceTest {
     }
 
     @Test
-    void removeDelivery() {
+    void removeDelivery_calls_delete_on_delivery() {
         Delivery delivery = new Delivery();
 
         pmService.removeDelivery(delivery);
