@@ -125,13 +125,13 @@ public class Task {
         this.requiredTime = requiredTime;
     }
 
-    @Override
-    public String toString() {
-        return "Task: " + name +
-                " " + requiredTime
-                + " " + subtasks.size() + " subtasks" +
-                " " + assignedUsers.size() + " assigned users";
-    }
+//    @Override
+//    public String toString() {
+//        return "Task: " + name +
+//                " " + requiredTime+
+//                + " " + subtasks.size() + " subtasks" +
+//                " " + assignedUsers.size() + " assigned users";
+//    }
 
     public int getParentTaskId() {
         return parentTaskId;
