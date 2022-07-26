@@ -183,12 +183,12 @@ public class PmService implements ProjectManagement {
     public void editProjectStartTime(Project project, LocalDateTime startTime) throws IllegalArgumentException {
 
         if (projectRepository.existsById(project.getId())) {
-            if (startTime.isBefore(LocalDateTime.MIN)) {
-                throw new IllegalArgumentException("Start time cannot be before 1970-01-01T00:00:00");
-            }
-            if (startTime.isAfter(LocalDateTime.MAX)) {
-                throw new IllegalArgumentException("Start time cannot be after 9999-12-31T23:59:59");
-            }
+//            if (startTime.isBefore(LocalDateTime.MIN)) {
+//                throw new IllegalArgumentException("Start time cannot be before 1970-01-01T00:00:00");
+//            }
+//            if (startTime.isAfter(LocalDateTime.MAX)) {
+//                throw new IllegalArgumentException("Start time cannot be after 9999-12-31T23:59:59");
+//            }
             project.setStartTime(startTime);
             projectRepository.save(project);
         } else {
@@ -319,6 +319,4 @@ public class PmService implements ProjectManagement {
             throw new IllegalArgumentException("Task does not exist");
         }
     }
-
-
 }

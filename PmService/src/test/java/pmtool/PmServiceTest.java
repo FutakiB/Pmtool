@@ -215,30 +215,135 @@ class PmServiceTest {
         Project project = new Project(1, "Project 1", ProjectStatus.IN_PROGRESS, LocalDateTime.now(), "Client 1", "BackOffice 1");
         when(projectRepository.existsById(project.getId())).thenReturn(true);
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            pmService.editProjectName(project, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+            pmService.editProjectName(project, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         });
         assertEquals("Project name cannot be longer than 50 characters", exception.getMessage());
         verify(projectRepository, times(0)).save(project);
     }
 
     @Test
-    void editProjectStatus() {
+    void editProjectStatusSuccess() {
+        Project project = new Project(1, "Project 1", ProjectStatus.IN_PROGRESS, LocalDateTime.now(), "Client 1", "BackOffice 1");
+        when(projectRepository.existsById(project.getId())).thenReturn(true);
+        pmService.editProjectStatus(project, ProjectStatus.COMPLETED);
+        verify(projectRepository, times(1)).save(project);
     }
 
     @Test
-    void editProjectStartTime() {
+    void editProjectStatusProjectNotExists() {
+        Project project = new Project(1, "Project 1", ProjectStatus.IN_PROGRESS, LocalDateTime.now(), "Client 1", "BackOffice 1");
+        when(projectRepository.existsById(project.getId())).thenReturn(false);
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            pmService.editProjectStatus(project, ProjectStatus.COMPLETED);
+        });
+        assertEquals("Project does not exist", exception.getMessage());
+        verify(projectRepository, times(0)).save(project);
     }
 
     @Test
-    void editProjectClientName() {
+    void editProjectStartTimeSuccessful() {
+        Project project = new Project(1, "Project 1", ProjectStatus.IN_PROGRESS, LocalDateTime.now(), "Client 1", "BackOffice 1");
+        when(projectRepository.existsById(project.getId())).thenReturn(true);
+        pmService.editProjectStartTime(project, LocalDateTime.now());
+        verify(projectRepository, times(1)).save(project);
     }
 
     @Test
-    void editProjectBackOfficeName() {
+    void editProjectStartTimeProjectNotExists() {
+        Project project = new Project(1, "Project 1", ProjectStatus.IN_PROGRESS, LocalDateTime.now(), "Client 1", "BackOffice 1");
+        when(projectRepository.existsById(project.getId())).thenReturn(false);
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            pmService.editProjectStartTime(project, LocalDateTime.now());
+        });
+        assertEquals("Project does not exist", exception.getMessage());
+        verify(projectRepository, times(0)).save(project);
+    }
+
+    @Test
+    void editProjectClientNameSuccessful() {
+        Project project = new Project(1, "Project 1", ProjectStatus.IN_PROGRESS, LocalDateTime.now(), "Client 1", "BackOffice 1");
+        when(projectRepository.existsById(project.getId())).thenReturn(true);
+        pmService.editProjectClientName(project, "Client 1 edited");
+        verify(projectRepository, times(1)).save(project);
+    }
+
+    @Test
+    void editProjectClientProjectNotExists() {
+        Project project = new Project(1, "Project 1", ProjectStatus.IN_PROGRESS, LocalDateTime.now(), "Client 1", "BackOffice 1");
+        when(projectRepository.existsById(project.getId())).thenReturn(false);
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            pmService.editProjectClientName(project, "Client 1 edited");
+        });
+        assertEquals("Project does not exist", exception.getMessage());
+        verify(projectRepository, times(0)).save(project);
+    }
+
+    @Test
+    void editProjectClientNameIsEmpty() {
+        Project project = new Project(1, "Project 1", ProjectStatus.IN_PROGRESS, LocalDateTime.now(), "Client 1", "BackOffice 1");
+        when(projectRepository.existsById(project.getId())).thenReturn(true);
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            pmService.editProjectClientName(project, "");
+        });
+        assertEquals("Client name cannot be empty", exception.getMessage());
+        verify(projectRepository, times(0)).save(project);
+    }
+
+    @Test
+    void editProjectClientNameTooLong() {
+        Project project = new Project(1, "Project 1", ProjectStatus.IN_PROGRESS, LocalDateTime.now(), "Client 1", "BackOffice 1");
+        when(projectRepository.existsById(project.getId())).thenReturn(true);
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            pmService.editProjectClientName(project, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        });
+        assertEquals("Client name cannot be longer than 50 characters", exception.getMessage());
+        verify(projectRepository, times(0)).save(project);
+    }
+
+    @Test
+    void editProjectBackOfficeNameSuccessful() {
+        Project project = new Project(1, "Project 1", ProjectStatus.IN_PROGRESS, LocalDateTime.now(), "Client 1", "BackOffice 1");
+        when(projectRepository.existsById(project.getId())).thenReturn(true);
+        pmService.editProjectBackOfficeName(project, "BackOffice 1 edited");
+        verify(projectRepository, times(1)).save(project);
+    }
+
+    @Test
+    void editProjectBackOfficeProjectNotExists() {
+        Project project = new Project(1, "Project 1", ProjectStatus.IN_PROGRESS, LocalDateTime.now(), "Client 1", "BackOffice 1");
+        when(projectRepository.existsById(project.getId())).thenReturn(false);
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            pmService.editProjectBackOfficeName(project, "BackOffice 1 edited");
+        });
+        assertEquals("Project does not exist", exception.getMessage());
+        verify(projectRepository, times(0)).save(project);
+    }
+
+    @Test
+    void editProjectBackOfficeNameIsEmpty() {
+        Project project = new Project(1, "Project 1", ProjectStatus.IN_PROGRESS, LocalDateTime.now(), "Client 1", "BackOffice 1");
+        when(projectRepository.existsById(project.getId())).thenReturn(true);
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            pmService.editProjectBackOfficeName(project, "");
+        });
+        assertEquals("Back office name cannot be empty", exception.getMessage());
+        verify(projectRepository, times(0)).save(project);
+    }
+
+    @Test
+    void editProjectBackOfficeNameTooLong() {
+        Project project = new Project(1, "Project 1", ProjectStatus.IN_PROGRESS, LocalDateTime.now(), "Client 1", "BackOffice 1");
+        when(projectRepository.existsById(project.getId())).thenReturn(true);
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            pmService.editProjectBackOfficeName(project, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        });
+        assertEquals("Back office name cannot be longer than 50 characters", exception.getMessage());
+        verify(projectRepository, times(0)).save(project);
     }
 
     @Test
     void editMilestoneName() {
+
     }
 
     @Test
