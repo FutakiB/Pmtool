@@ -1,10 +1,13 @@
 package pmtool;
 
 
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.mockito.Mockito.mock;
+import java.time.Duration;
+import java.time.LocalDateTime;
+
+import static org.mockito.Mockito.*;
 
 class PmServiceTest {
 
@@ -15,7 +18,7 @@ class PmServiceTest {
 
     private PmService pmService;
 
-    @BeforeAll
+    @BeforeEach
     public void setup() {
         projectRepository = mock(InMemoryProjectRepository.class);
         milestoneRepository = mock(InMemoryMilestoneRepository.class);
@@ -53,46 +56,47 @@ class PmServiceTest {
 
     @Test
     void addProject() {
-//        Project project = new Project(4, "Project 4", ProjectStatus.IN_PROGRESS, LocalDateTime.now(), "Client 4", "BackOffice 4");
-//        pmService.addProject(project);
-//        //assertEquals(4, projectRepository.findAll().size());
-//        verify(projectRepository).save(project);
+        Project project = new Project(4, "Project 4", ProjectStatus.IN_PROGRESS, LocalDateTime.now(), "Client 4", "BackOffice 4");
+        pmService.addProject(project);
+        verify(projectRepository, times(1)).save(project);
     }
 
     @Test
     void addMilestone() {
-//        Milestone milestone = new Milestone(4, 4, "Milestone 4", LocalDateTime.now(), Duration.ZERO);
-//        Project p = new Project(1, "Project 4", ProjectStatus.IN_PROGRESS, LocalDateTime.now(), "Client 4", "BackOffice 4");
-//        pmService.addProject(p);
-//        pmService.addMilestone(p, milestone);
-//        assertEquals(4, milestoneRepository.findAll().size());
+        Milestone milestone = new Milestone(4, 4, "Milestone 4", LocalDateTime.now(), Duration.ZERO);
+        Project p = new Project(1, "Project 4", ProjectStatus.IN_PROGRESS, LocalDateTime.now(), "Client 4", "BackOffice 4");
+        pmService.addMilestone(p, milestone);
+        verify(milestoneRepository, times(1)).save(milestone);
     }
 
     @Test
     void addDelivery() {
-//        Delivery delivery = new Delivery(4, "Delivery 4", DeliveryType.ARTIFACT, 4);
-//        pmService.addDelivery(milestoneRepository.getOne(1), delivery);
-//        assertEquals(4, deliveryRepository.findAll().size());
+        Milestone milestone = new Milestone(4, 4, "Milestone 4", LocalDateTime.now(), Duration.ZERO);
+        Delivery delivery = new Delivery(4, "Delivery 4", DeliveryType.ARTIFACT, 4);
+        pmService.addDelivery(milestone, delivery);
+        verify(deliveryRepository, times(1)).save(delivery);
     }
 
     @Test
     void addTask() {
-//        Task task = new Task(10, 1, 1, null, "Task 4", Duration.ZERO);
-//        pmService.addTask(milestoneRepository.getOne(1), task);
-//        assertEquals(7, taskRepository.findAll().size());
+        Task task = new Task(10, 1, 1, null, "Task 4", Duration.ZERO);
+        Milestone milestone = new Milestone(4, 4, "Milestone 4", LocalDateTime.now(), Duration.ZERO);
+        pmService.addTask(milestone, task);
+        verify(taskRepository, times(1)).save(task);
     }
 
     @Test
     void testAddSubTask() {
-//        Task task = new Task(11, 1, 1, taskRepository.getOne(1).getId(), "Task 4", Duration.ZERO);
-//        pmService.addTask(taskRepository.getOne(1), task);
-//        assertEquals(7, taskRepository.findAll().size());
+        Task task = new Task(11, 1, 1, null, "Task 4", Duration.ZERO);
+        Task subTask = new Task(12, 1, 1, task.getId(), "SubTask 4", Duration.ZERO);
+        pmService.addTask(task, subTask);
+        verify(taskRepository, times(1)).save(subTask);
     }
 
     @Test
     void removeProject() {
-//        pmService.removeProject(projectRepository.getOne(1));
-//        assertEquals(2, projectRepository.findAll().size());
+        pmService.removeProject(projectRepository.getOne(1));
+        verify(projectRepository, times(1)).delete(projectRepository.getOne(1));
     }
 
     @Test

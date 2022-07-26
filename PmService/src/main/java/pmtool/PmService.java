@@ -27,27 +27,42 @@ public class PmService implements ProjectManagement {
     }
 
     @Override
-    public void addMilestone(Project project, Milestone milestone) {
+    public void addMilestone(Project project, Milestone milestone) throws IllegalArgumentException {
+        if (project == null || milestone == null) {
+            throw new IllegalArgumentException("Project and milestone must not be null");
+        }
         milestoneRepository.save(milestone);
         project.addMilestone(milestone);
     }
 
     @Override
-    public void addDelivery(Milestone milestone, Delivery delivery) {
+    public void addDelivery(Milestone milestone, Delivery delivery) throws IllegalArgumentException {
+        if (milestone == null || delivery == null) {
+            throw new IllegalArgumentException("Milestone and Delivery cannot be null");
+        }
         deliveryRepository.save(delivery);
         milestone.addDelivery(delivery);
     }
 
     @Override
-    public void addTask(Milestone milestone, Task task) {
+    public void addTask(Milestone milestone, Task task) throws IllegalArgumentException {
+        if (milestone == null || task == null) {
+            throw new IllegalArgumentException("Milestone and Task cannot be null");
+        }
         taskRepository.save(task);
         milestone.addTask(task);
     }
 
     @Override
-    public void addTask(Task task, Task SubTask) {
-        taskRepository.save(SubTask);
-        task.addSubtask(SubTask);
+    public void addTask(Task task, Task subTask) throws IllegalArgumentException {
+        if (task == null || subTask == null) {
+            throw new IllegalArgumentException("Task and SubTask cannot be null");
+        }
+        if (task == subTask) {
+            throw new IllegalArgumentException("Task and SubTask cannot be the same");
+        }
+        taskRepository.save(subTask);
+        task.addSubtask(subTask);
     }
 
     @Override
@@ -57,7 +72,6 @@ public class PmService implements ProjectManagement {
                 .forEach(this::removeMilestone);
         projectRepository.delete(project);
     }
-
     @Override
     public void removeMilestone(Milestone milestone) {
         taskRepository.findAll().stream()
