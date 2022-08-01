@@ -1,15 +1,25 @@
 package pmtool;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="Users")
 public class User {
     public enum Role {
         DEV,
         MANAGER,
         ANALYST
     }
+
+    @Id
+    private Integer id;
     static private Integer counter = 0;
     private String name;
-    private final Integer id;
     private Role role;
+    public User() {
+    }
 
     public User(Integer id, String name, Role role) {
         this.id = id;
