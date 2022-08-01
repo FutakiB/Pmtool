@@ -31,7 +31,7 @@ public class Milestone {
     }
 
     public Milestone() {
-        this.id = null;
+        this.id = 0;
         this.projectId = null;
         this.name = "New milestone";
         this.dueDate = LocalDateTime.now();

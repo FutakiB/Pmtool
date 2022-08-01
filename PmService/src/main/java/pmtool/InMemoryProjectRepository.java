@@ -82,7 +82,7 @@ public class InMemoryProjectRepository implements JpaRepository<Project, Integer
 
     @Override
     public <S extends Project> S save(S entity) {
-        Optional<Project> project = findById(entity.getId());
+        Optional project = findById(entity.getId());
         if (project.isPresent()) {
             db.set(db.indexOf(project.get()), entity);
         } else {

@@ -81,7 +81,7 @@ public class InMemoryMilestoneRepository implements JpaRepository<Milestone, Int
 
     @Override
     public <S extends Milestone> S save(S entity) {
-        Optional<Milestone> milestone = findById(entity.getId());
+        Optional milestone = findById(entity.getId());
         if (milestone.isPresent()){
             db.set(db.indexOf(milestone.get()),entity);
         }else{

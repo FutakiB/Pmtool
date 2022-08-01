@@ -35,10 +35,10 @@ public class Task {
     }
 
     public Task() {
-        this.id = null;
-        this.projectId = null;
-        this.milestoneId = null;
-        this.parentTaskId = null;
+        this.id = 0;
+        this.projectId = 0;
+        this.milestoneId = 0;
+        this.parentTaskId = 0;
         this.name = "New task";
         this.requiredTime = Duration.ZERO;
 //        this.subtasks = new ArrayList<>();

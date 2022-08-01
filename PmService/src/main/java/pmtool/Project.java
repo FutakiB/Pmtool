@@ -22,7 +22,7 @@ public class Project {
     }
 
     public Project() {
-        this.id = null;
+        this.id = 0;
         this.name = "New project";
         this.status = ProjectStatus.IN_PROGRESS;
         this.startTime = LocalDateTime.now();

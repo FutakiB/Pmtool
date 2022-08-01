@@ -28,7 +28,7 @@ public class Delivery {
     public Delivery() {
         this.id = counter;
         counter++;
-        this.milestoneId = null;
+        this.milestoneId = 0;
         this.name = "New delivery";
         this.type = DeliveryType.ARTIFACT;
     }
